@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://string-db.org/schema/interaction.json",
+  "title": "Interaction",
+  "description": "A protein-protein interaction record from the STRING database with combined and component evidence scores.",
+  "type": "object",
+  "properties": {
+    "stringId_A": {
+      "type": "string",
+      "description": "STRING identifier for protein A (taxon.ENSP format)",
+      "examples": ["9606.ENSP00000269305"]
+    },
+    "stringId_B": {
+      "type": "string",
+      "description": "STRING identifier for protein B (taxon.ENSP format)",
+      "examples": ["9606.ENSP00000083083"]
+    },
+    "preferredName_A": {
+      "type": "string",
+      "description": "Preferred gene/protein name for protein A",
+      "examples": ["TP53"]
+    },
+    "preferredName_B": {
+      "type": "string",
+      "description": "Preferred gene/protein name for protein B",
+      "examples": ["MDM2"]
+    },
+    "ncbiTaxonId": {
+      "type": "integer",
+      "description": "NCBI taxonomy identifier for the organism",
+      "examples": [9606]
+    },
+    "score": {
+      "type": "number",
+      "description": "Combined interaction confidence score (0-1, multiply by 1000 for the integer form)",
+      "minimum": 0,
+      "maximum": 1,
+      "examples": [0.999]
+    },
+    "nscore": {
+      "type": "number",
+      "description": "Genomic neighborhood evidence score",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "fscore": {
+      "type": "number",
+      "description": "Gene fusion evidence score",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "pscore": {
+      "type": "number",
+      "description": "Phylogenetic co-occurrence evidence score",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "ascore": {
+      "type": "number",
+      "description": "Co-expression evidence score",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "escore": {
+      "type": "number",
+      "description": "Experimental evidence score",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "dscore": {
+      "type": "number",
+      "description": "Curated database evidence score",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "tscore": {
+      "type": "number",
+      "description": "Text mining evidence score",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": ["stringId_A", "stringId_B", "preferredName_A", "preferredName_B", "ncbiTaxonId", "score"]
+}

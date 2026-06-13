@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://string-db.org/schema/string-id-mapping.json",
+  "title": "StringIdMapping",
+  "description": "A mapping from an input gene/protein identifier to a STRING protein identifier.",
+  "type": "object",
+  "properties": {
+    "queryIndex": {
+      "type": "integer",
+      "description": "Zero-based index of this identifier in the original query",
+      "minimum": 0,
+      "examples": [0]
+    },
+    "stringId": {
+      "type": "string",
+      "description": "STRING protein identifier in taxonId.ENSP format",
+      "pattern": "^[0-9]+\\.ENSP[0-9]+$",
+      "examples": ["9606.ENSP00000269305"]
+    },
+    "ncbiTaxonId": {
+      "type": "integer",
+      "description": "NCBI taxonomy identifier of the matched protein's organism",
+      "examples": [9606]
+    },
+    "taxonName": {
+      "type": "string",
+      "description": "Scientific name of the organism",
+      "examples": ["Homo sapiens"]
+    },
+    "preferredName": {
+      "type": "string",
+      "description": "Preferred gene/protein name in STRING",
+      "examples": ["TP53"]
+    },
+    "annotation": {
+      "type": "string",
+      "description": "Short functional annotation for the protein",
+      "examples": ["Cellular tumor antigen p53; Acts as a tumor suppressor..."]
+    }
+  },
+  "required": ["stringId", "ncbiTaxonId", "preferredName"]
+}

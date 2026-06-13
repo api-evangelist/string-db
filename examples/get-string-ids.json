@@ -1,0 +1,38 @@
+{
+  "description": "Example: Map human gene names TP53, EGFR, and BRCA1 to STRING identifiers",
+  "request": {
+    "method": "GET",
+    "url": "https://string-db.org/api/json/get_string_ids",
+    "parameters": {
+      "identifiers": "TP53%0dEGFR%0dBRCA1",
+      "species": 9606,
+      "caller_identity": "example_pipeline"
+    }
+  },
+  "response": [
+    {
+      "queryIndex": 0,
+      "stringId": "9606.ENSP00000269305",
+      "ncbiTaxonId": 9606,
+      "taxonName": "Homo sapiens",
+      "preferredName": "TP53",
+      "annotation": "Cellular tumor antigen p53; Acts as a tumor suppressor in many tumor types"
+    },
+    {
+      "queryIndex": 1,
+      "stringId": "9606.ENSP00000275493",
+      "ncbiTaxonId": 9606,
+      "taxonName": "Homo sapiens",
+      "preferredName": "EGFR",
+      "annotation": "Epidermal growth factor receptor; Receptor tyrosine kinase"
+    },
+    {
+      "queryIndex": 2,
+      "stringId": "9606.ENSP00000380152",
+      "ncbiTaxonId": 9606,
+      "taxonName": "Homo sapiens",
+      "preferredName": "BRCA1",
+      "annotation": "Breast cancer type 1 susceptibility protein; DNA repair"
+    }
+  ]
+}

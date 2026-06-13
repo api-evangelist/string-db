@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://string-db.org/schema/enrichment-result.json",
+  "title": "EnrichmentResult",
+  "description": "A single enriched functional term from STRING functional enrichment analysis.",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "description": "Functional annotation category",
+      "enum": [
+        "Process",
+        "Function",
+        "Component",
+        "Keyword",
+        "KEGG",
+        "RCTM",
+        "Pfam",
+        "InterPro",
+        "SMART",
+        "NetworkNeighborAL",
+        "COMPARTMENTS",
+        "Tissue",
+        "Disease"
+      ],
+      "examples": ["Process"]
+    },
+    "term": {
+      "type": "string",
+      "description": "Functional term identifier",
+      "examples": ["GO:0006915"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the functional term",
+      "examples": ["apoptotic process"]
+    },
+    "number_of_genes": {
+      "type": "integer",
+      "description": "Number of input genes annotated to this term",
+      "minimum": 1
+    },
+    "number_of_genes_in_background": {
+      "type": "integer",
+      "description": "Number of background proteome genes annotated to this term",
+      "minimum": 0
+    },
+    "ncbiTaxonId": {
+      "type": "integer",
+      "description": "NCBI taxon ID of the species",
+      "examples": [9606]
+    },
+    "inputGenes": {
+      "type": "string",
+      "description": "Comma-separated STRING identifiers of input genes annotated to this term"
+    },
+    "preferredNames": {
+      "type": "string",
+      "description": "Comma-separated preferred gene names annotated to this term"
+    },
+    "p_value": {
+      "type": "number",
+      "description": "Enrichment p-value from hypergeometric test",
+      "minimum": 0,
+      "maximum": 1,
+      "examples": [1.23e-10]
+    },
+    "fdr": {
+      "type": "number",
+      "description": "Benjamini-Hochberg false discovery rate corrected p-value",
+      "minimum": 0,
+      "maximum": 1,
+      "examples": [4.56e-8]
+    }
+  },
+  "required": ["category", "term", "number_of_genes", "p_value", "fdr"]
+}

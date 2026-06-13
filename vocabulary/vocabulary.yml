@@ -1,0 +1,187 @@
+title: STRING API Vocabulary
+description: >
+  Key terms, identifiers, score types, and parameter values used in the STRING
+  protein-protein interaction database REST API.
+
+terms:
+
+  - term: STRING ID
+    definition: >
+      A unique protein identifier in STRING composed of the NCBI taxon ID and
+      the Ensembl protein ID, separated by a period (e.g. 9606.ENSP00000269305).
+      Always use STRING IDs in API calls when possible for best performance.
+    examples:
+      - "9606.ENSP00000269305"
+      - "10090.ENSMUSP00000062279"
+
+  - term: Combined Score
+    definition: >
+      The overall confidence score for a protein-protein interaction in STRING,
+      combining evidence from all seven evidence channels. Ranges from 0 to 1
+      (or 0 to 1000 in integer form). Thresholds: low confidence = 0.15,
+      medium = 0.40, high = 0.70, highest = 0.90.
+    related: [nscore, fscore, pscore, ascore, escore, dscore, tscore]
+
+  - term: nscore
+    definition: >
+      Genomic neighborhood score. Reflects evolutionary co-conservation of
+      gene order (operons) across prokaryotic genomes.
+
+  - term: fscore
+    definition: >
+      Gene fusion score. Reflects cases where two separate proteins in one
+      organism appear as a single fused protein in another organism.
+
+  - term: pscore
+    definition: >
+      Phylogenetic co-occurrence (profile) score. Reflects similar patterns
+      of presence/absence across species (suggesting functional coupling).
+
+  - term: ascore
+    definition: >
+      Co-expression score. Reflects evidence that two genes are expressed
+      together under similar conditions across a range of experiments.
+
+  - term: escore
+    definition: >
+      Experimental evidence score. Reflects physical or functional interactions
+      determined by biochemical or genetic experiments.
+
+  - term: dscore
+    definition: >
+      Curated database score. Reflects interactions imported from manually
+      curated pathway and interaction databases (e.g. KEGG, Reactome, DIP).
+
+  - term: tscore
+    definition: >
+      Text mining score. Reflects co-mentions in PubMed abstracts and full-text
+      scientific articles, weighted by statistical analysis.
+
+  - term: network_type
+    definition: >
+      Defines which types of interaction evidence to include in the STRING network.
+      'functional' includes all seven evidence channels.
+      'physical' includes only evidence for direct physical contact
+      (experimental + database + textmining with physical-binding curation).
+    values:
+      - functional
+      - physical
+
+  - term: network_flavor
+    definition: >
+      Visual style for network edge rendering (image endpoints only).
+      'evidence' colors edges by the primary supporting evidence channel.
+      'confidence' uses edge thickness to indicate combined score.
+      'actions' colors edges by the predicted mode of action.
+    values:
+      - evidence
+      - confidence
+      - actions
+
+  - term: required_score
+    definition: >
+      Minimum combined interaction score threshold (integer 0-1000).
+      Interactions below this threshold are excluded from results.
+    recommended_thresholds:
+      low_confidence: 150
+      medium_confidence: 400
+      high_confidence: 700
+      highest_confidence: 900
+
+  - term: FDR
+    definition: >
+      False Discovery Rate. Used in enrichment analysis to correct for
+      multiple testing using the Benjamini-Hochberg procedure.
+      Typical threshold for significance: FDR < 0.05.
+
+  - term: caller_identity
+    definition: >
+      A short string identifying your application or organization.
+      Strongly recommended in all API calls so STRING administrators
+      can contact you if usage issues arise.
+
+annotation_categories:
+  - category: Process
+    description: Gene Ontology Biological Process terms
+    example: "GO:0006915 (apoptotic process)"
+  - category: Function
+    description: Gene Ontology Molecular Function terms
+    example: "GO:0004672 (protein kinase activity)"
+  - category: Component
+    description: Gene Ontology Cellular Component terms
+    example: "GO:0005634 (nucleus)"
+  - category: Keyword
+    description: UniProt keyword annotations
+    example: "KW-0418 (Kinase)"
+  - category: KEGG
+    description: KEGG metabolic and signaling pathway identifiers
+    example: "hsa04110 (Cell cycle)"
+  - category: RCTM
+    description: Reactome pathway identifiers
+    example: "R-HSA-69620 (Cell Cycle Checkpoints)"
+  - category: Pfam
+    description: Pfam protein family domain identifiers
+    example: "PF00069 (Protein kinase domain)"
+  - category: InterPro
+    description: InterPro integrated protein domain database identifiers
+    example: "IPR011009 (Protein kinase-like domain)"
+  - category: SMART
+    description: SMART protein domain identifiers
+    example: "SM00220 (Ser/Thr protein kinase domain)"
+  - category: NetworkNeighborAL
+    description: STRING network-based annotation using guilt-by-association
+  - category: COMPARTMENTS
+    description: Subcellular location annotations from COMPARTMENTS database
+  - category: Tissue
+    description: Tissue-specific expression annotations
+  - category: Disease
+    description: Disease associations from DISEASES database
+
+common_species:
+  - taxon_id: 9606
+    name: Homo sapiens
+    common: Human
+  - taxon_id: 10090
+    name: Mus musculus
+    common: Mouse
+  - taxon_id: 10116
+    name: Rattus norvegicus
+    common: Rat
+  - taxon_id: 7227
+    name: Drosophila melanogaster
+    common: Fruit fly
+  - taxon_id: 6239
+    name: Caenorhabditis elegans
+    common: Roundworm
+  - taxon_id: 4932
+    name: Saccharomyces cerevisiae
+    common: Baker's yeast
+  - taxon_id: 3702
+    name: Arabidopsis thaliana
+    common: Thale cress
+  - taxon_id: 7955
+    name: Danio rerio
+    common: Zebrafish
+  - taxon_id: 511145
+    name: Escherichia coli K-12
+    common: E. coli
+
+output_formats:
+  - format: tsv
+    description: Tab-separated values with column header row
+  - format: tsv-no-header
+    description: Tab-separated values without column header row
+  - format: json
+    description: JSON array of objects
+  - format: xml
+    description: XML-formatted response
+  - format: psi-mi
+    description: PSI-MI XML2.5 interaction format (network endpoints only)
+  - format: psi-mi-tab
+    description: PSI-MITAB tab-separated interaction format (network endpoints only)
+  - format: image
+    description: Standard-resolution PNG network image
+  - format: highres_image
+    description: High-resolution PNG network image
+  - format: svg
+    description: Scalable Vector Graphics network image

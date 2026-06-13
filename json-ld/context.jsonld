@@ -1,0 +1,156 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "bioschemas": "https://bioschemas.org/",
+    "string": "https://string-db.org/vocab/",
+    "ncbi": "https://www.ncbi.nlm.nih.gov/taxonomy/",
+    "go": "http://purl.obolibrary.org/obo/GO_",
+    "kegg": "https://www.kegg.jp/entry/",
+    "uniprot": "https://www.uniprot.org/uniprot/",
+
+    "Interaction": {
+      "@id": "bioschemas:Protein",
+      "@type": "@id"
+    },
+    "ProteinMapping": {
+      "@id": "bioschemas:Protein",
+      "@type": "@id"
+    },
+    "EnrichmentResult": {
+      "@id": "string:EnrichmentResult",
+      "@type": "@id"
+    },
+
+    "stringId": {
+      "@id": "string:stringId",
+      "@type": "xsd:string"
+    },
+    "stringId_A": {
+      "@id": "string:interactorA",
+      "@type": "xsd:string"
+    },
+    "stringId_B": {
+      "@id": "string:interactorB",
+      "@type": "xsd:string"
+    },
+    "preferredName": {
+      "@id": "schema:name"
+    },
+    "preferredName_A": {
+      "@id": "string:preferredNameA"
+    },
+    "preferredName_B": {
+      "@id": "string:preferredNameB"
+    },
+    "annotation": {
+      "@id": "schema:description"
+    },
+    "ncbiTaxonId": {
+      "@id": "string:ncbiTaxonId",
+      "@type": "xsd:integer"
+    },
+    "taxonName": {
+      "@id": "schema:taxonRank"
+    },
+    "score": {
+      "@id": "string:combinedScore",
+      "@type": "xsd:decimal"
+    },
+    "nscore": {
+      "@id": "string:neighborhoodScore",
+      "@type": "xsd:decimal"
+    },
+    "fscore": {
+      "@id": "string:fusionScore",
+      "@type": "xsd:decimal"
+    },
+    "pscore": {
+      "@id": "string:phylogeneticScore",
+      "@type": "xsd:decimal"
+    },
+    "ascore": {
+      "@id": "string:coexpressionScore",
+      "@type": "xsd:decimal"
+    },
+    "escore": {
+      "@id": "string:experimentalScore",
+      "@type": "xsd:decimal"
+    },
+    "dscore": {
+      "@id": "string:databaseScore",
+      "@type": "xsd:decimal"
+    },
+    "tscore": {
+      "@id": "string:textminingScore",
+      "@type": "xsd:decimal"
+    },
+    "category": {
+      "@id": "string:annotationCategory"
+    },
+    "term": {
+      "@id": "string:functionalTerm"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "number_of_genes": {
+      "@id": "string:numberOfGenes",
+      "@type": "xsd:integer"
+    },
+    "number_of_genes_in_background": {
+      "@id": "string:numberOfGenesInBackground",
+      "@type": "xsd:integer"
+    },
+    "p_value": {
+      "@id": "string:pValue",
+      "@type": "xsd:decimal"
+    },
+    "fdr": {
+      "@id": "string:falsDiscoveryRate",
+      "@type": "xsd:decimal"
+    },
+    "inputGenes": {
+      "@id": "string:inputGenes"
+    },
+    "preferredNames": {
+      "@id": "string:preferredNames"
+    },
+    "bitscore": {
+      "@id": "string:smithWatermanBitscore",
+      "@type": "xsd:decimal"
+    },
+    "identity": {
+      "@id": "string:sequenceIdentity",
+      "@type": "xsd:decimal"
+    },
+    "number_of_nodes": {
+      "@id": "string:numberOfNodes",
+      "@type": "xsd:integer"
+    },
+    "number_of_edges": {
+      "@id": "string:numberOfEdges",
+      "@type": "xsd:integer"
+    },
+    "expected_number_of_edges": {
+      "@id": "string:expectedNumberOfEdges",
+      "@type": "xsd:decimal"
+    },
+    "average_node_degree": {
+      "@id": "string:averageNodeDegree",
+      "@type": "xsd:decimal"
+    },
+    "local_clustering_coefficient": {
+      "@id": "string:localClusteringCoefficient",
+      "@type": "xsd:decimal"
+    },
+    "string_version": {
+      "@id": "schema:version"
+    },
+    "stable_address": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  }
+}

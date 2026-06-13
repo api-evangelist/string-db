@@ -1,0 +1,22 @@
+{
+  "description": "Example: PPI enrichment test for a set of human proteins to check whether their interactions are more than expected by chance",
+  "request": {
+    "method": "GET",
+    "url": "https://string-db.org/api/json/ppi_enrichment",
+    "parameters": {
+      "identifiers": "9606.ENSP00000269305%0d9606.ENSP00000366955%0d9606.ENSP00000380152%0d9606.ENSP00000083083",
+      "species": 9606,
+      "required_score": 400,
+      "network_type": "functional",
+      "caller_identity": "example_pipeline"
+    }
+  },
+  "response": {
+    "number_of_nodes": 4,
+    "number_of_edges": 6,
+    "average_node_degree": 3.0,
+    "local_clustering_coefficient": 1.0,
+    "expected_number_of_edges": 0.18,
+    "p_value": 1.0e-6
+  }
+}

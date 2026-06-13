@@ -407,6 +407,7 @@ common:
     url: https://string-db.org/help/api/
   - type: Downloads
     url: https://string-db.org/cgi/download
+modified: 2026-06-13
 maintainers:
   - FN: STRING Consortium
     url: https://string-db.org

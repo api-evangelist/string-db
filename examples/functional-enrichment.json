@@ -1,0 +1,50 @@
+{
+  "description": "Example: Functional enrichment analysis for a set of human DNA damage response proteins",
+  "request": {
+    "method": "GET",
+    "url": "https://string-db.org/api/json/enrichment",
+    "parameters": {
+      "identifiers": "9606.ENSP00000269305%0d9606.ENSP00000366955%0d9606.ENSP00000380152",
+      "species": 9606,
+      "caller_identity": "example_pipeline"
+    }
+  },
+  "response": [
+    {
+      "category": "Process",
+      "term": "GO:0006974",
+      "number_of_genes": 3,
+      "number_of_genes_in_background": 287,
+      "ncbiTaxonId": 9606,
+      "inputGenes": "9606.ENSP00000269305,9606.ENSP00000366955,9606.ENSP00000380152",
+      "preferredNames": "TP53,ATM,BRCA1",
+      "p_value": 1.23e-10,
+      "fdr": 4.56e-8,
+      "description": "cellular response to DNA damage stimulus"
+    },
+    {
+      "category": "Process",
+      "term": "GO:0006281",
+      "number_of_genes": 3,
+      "number_of_genes_in_background": 413,
+      "ncbiTaxonId": 9606,
+      "inputGenes": "9606.ENSP00000269305,9606.ENSP00000366955,9606.ENSP00000380152",
+      "preferredNames": "TP53,ATM,BRCA1",
+      "p_value": 2.87e-9,
+      "fdr": 5.31e-7,
+      "description": "DNA repair"
+    },
+    {
+      "category": "KEGG",
+      "term": "hsa04110",
+      "number_of_genes": 2,
+      "number_of_genes_in_background": 126,
+      "ncbiTaxonId": 9606,
+      "inputGenes": "9606.ENSP00000269305,9606.ENSP00000366955",
+      "preferredNames": "TP53,ATM",
+      "p_value": 3.45e-4,
+      "fdr": 0.012,
+      "description": "Cell cycle"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "description": "Example: Retrieve interaction partners for human TP53 with high confidence (score >= 700)",
+  "request": {
+    "method": "GET",
+    "url": "https://string-db.org/api/json/interaction_partners",
+    "parameters": {
+      "identifiers": "9606.ENSP00000269305",
+      "species": 9606,
+      "limit": 5,
+      "required_score": 700,
+      "caller_identity": "example_pipeline"
+    }
+  },
+  "response": [
+    {
+      "stringId_A": "9606.ENSP00000269305",
+      "stringId_B": "9606.ENSP00000083083",
+      "preferredName_A": "TP53",
+      "preferredName_B": "MDM2",
+      "ncbiTaxonId": 9606,
+      "score": 0.999,
+      "nscore": 0,
+      "fscore": 0,
+      "pscore": 0.061,
+      "ascore": 0.101,
+      "escore": 0.999,
+      "dscore": 0.9,
+      "tscore": 0.963
+    },
+    {
+      "stringId_A": "9606.ENSP00000269305",
+      "stringId_B": "9606.ENSP00000366955",
+      "preferredName_A": "TP53",
+      "preferredName_B": "ATM",
+      "ncbiTaxonId": 9606,
+      "score": 0.993,
+      "nscore": 0,
+      "fscore": 0,
+      "pscore": 0.045,
+      "ascore": 0.072,
+      "escore": 0.993,
+      "dscore": 0.9,
+      "tscore": 0.871
+    }
+  ]
+}
