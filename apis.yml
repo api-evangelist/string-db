@@ -1,0 +1,412 @@
+name: STRING
+description: >
+  STRING is a protein-protein interaction network database providing scored
+  associations between proteins across thousands of organisms. The REST API
+  enables programmatic access to interaction scores, network visualizations,
+  functional enrichment analysis, homology data, and protein annotations.
+  STRING integrates data from genomic context, co-expression, text mining,
+  biochemical and genetic experiments, and curated databases.
+image: https://string-db.org/images/logo/logo_medium.png
+tags:
+  - Bioinformatics
+  - Proteins
+  - Genomics
+  - Life Sciences
+  - Research
+  - Open Data
+url: https://string-db.org
+apis:
+  - name: STRING REST API
+    description: >
+      REST API for accessing protein-protein interaction networks, functional
+      enrichment results, homology data, and annotation information from the
+      STRING database. Supports multiple output formats including JSON, TSV,
+      XML, and image formats.
+    humanURL: https://string-db.org/help/api/
+    baseURL: https://string-db.org
+    version: "12.0"
+    tags:
+      - Protein Interactions
+      - Network Biology
+      - Functional Enrichment
+      - Bioinformatics
+    properties:
+      - type: Documentation
+        url: https://string-db.org/help/api/
+      - type: OpenAPI
+        url: https://string-db.org/help/api/
+    contact:
+      - FN: STRING Consortium
+        url: https://string-db.org
+    meta:
+      security:
+        - type: apiKey
+          description: >
+            API key required only for Values/Ranks Enrichment endpoints.
+            Obtain via POST /api/json/get_api_key. All other endpoints
+            are publicly accessible without authentication.
+    endpoints:
+      - name: Get STRING IDs
+        method: GET
+        path: /api/{format}/get_string_ids
+        description: Map gene names, synonyms, or UniProt IDs to STRING identifiers
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers to map
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID (e.g. 9606 for human)
+          - name: caller_identity
+            in: query
+            required: false
+            description: Identifier for your application
+      - name: Network Image or Interactions
+        method: GET
+        path: /api/{format}/network
+        description: >
+          Retrieve network image or interaction data for a set of proteins.
+          Supports image formats (image, highres_image, svg) and data formats
+          (tsv, json, xml, psi-mi, psi-mi-tab).
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+          - name: required_score
+            in: query
+            required: false
+            description: Minimum interaction score threshold (0-1000)
+          - name: network_type
+            in: query
+            required: false
+            description: functional or physical
+          - name: network_flavor
+            in: query
+            required: false
+            description: evidence, confidence, or actions
+          - name: add_color_nodes
+            in: query
+            required: false
+            description: Number of additional colored nodes to add
+          - name: add_white_nodes
+            in: query
+            required: false
+            description: Number of additional white nodes to add
+      - name: Get Network Link
+        method: GET
+        path: /api/{format}/get_link
+        description: Generate a stable URL linking to a STRING network
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, json)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+      - name: Interaction Partners
+        method: GET
+        path: /api/{format}/interaction_partners
+        description: Retrieve all STRING interaction partners for input proteins
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+          - name: limit
+            in: query
+            required: false
+            description: Maximum number of interaction partners to return
+          - name: required_score
+            in: query
+            required: false
+            description: Minimum interaction score threshold (0-1000)
+          - name: network_type
+            in: query
+            required: false
+            description: functional or physical
+      - name: Homology
+        method: GET
+        path: /api/{format}/homology
+        description: >
+          Return Smith-Waterman bit scores between proteins in the input set
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+      - name: Best Homology
+        method: GET
+        path: /api/{format}/homology_best
+        description: >
+          Return best cross-species homology hits for input proteins
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID (source species)
+          - name: species_b
+            in: query
+            required: false
+            description: NCBI taxon ID (target species)
+      - name: Functional Enrichment
+        method: GET
+        path: /api/{format}/enrichment
+        description: >
+          Perform functional enrichment analysis for a set of proteins.
+          Returns enriched GO terms, KEGG pathways, and other categories.
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+          - name: background_string_identifiers
+            in: query
+            required: false
+            description: Custom background gene set identifiers
+          - name: allow_pubmed
+            in: query
+            required: false
+            description: Include PubMed term enrichment
+      - name: Enrichment Figure
+        method: GET
+        path: /api/{format}/enrichmentfigure
+        description: Generate a visual figure of enrichment results
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Image format (image, highres_image, svg)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+      - name: Functional Annotation
+        method: GET
+        path: /api/{format}/functional_annotation
+        description: >
+          Retrieve all functional annotations associated with input proteins
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+          - name: allow_pubmed
+            in: query
+            required: false
+            description: Include PubMed annotations
+      - name: Functional Terms
+        method: GET
+        path: /api/{format}/functional_terms
+        description: >
+          Retrieve details about specific functional terms (GO, KEGG, etc.)
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifier
+            in: query
+            required: true
+            description: Functional term identifier
+          - name: category
+            in: query
+            required: false
+            description: >
+              Term category (Process, Function, Component, Keyword, KEGG,
+              RCTM, Pfam, InterPro, SMART, NetworkNeighborAL, COMPARTMENTS,
+              Tissue, Disease)
+      - name: Gene Set Description
+        method: GET
+        path: /api/{format}/geneset_description
+        description: Retrieve textual descriptions for functional gene sets
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, tsv-no-header, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+      - name: PPI Enrichment
+        method: GET
+        path: /api/{format}/ppi_enrichment
+        description: >
+          Test whether interactions in a protein set are more significant
+          than expected by random chance
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, json, xml)
+          - name: identifiers
+            in: query
+            required: true
+            description: Protein identifiers
+          - name: species
+            in: query
+            required: false
+            description: NCBI taxon ID
+          - name: required_score
+            in: query
+            required: false
+            description: Minimum interaction score threshold (0-1000)
+          - name: network_type
+            in: query
+            required: false
+            description: functional or physical
+      - name: Get API Key
+        method: POST
+        path: /api/json/get_api_key
+        description: >
+          Obtain an API key required for Values/Ranks Enrichment endpoints
+        parameters:
+          - name: caller_identity
+            in: body
+            required: true
+            description: Identifier for your application
+      - name: Submit Values/Ranks Enrichment Job
+        method: POST
+        path: /api/json/valuesranks_enrichment_submit
+        description: >
+          Submit a GSEA-like enrichment analysis on a ranked list of proteins
+          with associated values. Accepts up to 1000 concurrent jobs.
+        parameters:
+          - name: api_key
+            in: body
+            required: true
+            description: API key obtained via get_api_key endpoint
+          - name: identifiers
+            in: body
+            required: true
+            description: Tab-separated protein-value pairs
+          - name: species
+            in: body
+            required: true
+            description: NCBI taxon ID
+          - name: ge_fdr
+            in: body
+            required: false
+            description: False discovery rate threshold (default 0.01)
+          - name: caller_identity
+            in: body
+            required: false
+            description: Identifier for your application
+      - name: Check Values/Ranks Enrichment Status
+        method: GET
+        path: /api/json/valuesranks_enrichment_status
+        description: Check the status of a submitted Values/Ranks enrichment job
+        parameters:
+          - name: api_key
+            in: query
+            required: true
+            description: API key
+          - name: job_id
+            in: query
+            required: true
+            description: Job ID from submission response
+      - name: Remove Values/Ranks Enrichment Job
+        method: GET
+        path: /api/json/valuesranks_enrichment_remove
+        description: Remove a completed Values/Ranks enrichment job
+        parameters:
+          - name: api_key
+            in: query
+            required: true
+            description: API key
+          - name: job_id
+            in: query
+            required: true
+            description: Job ID to remove
+      - name: Version
+        method: GET
+        path: /api/{format}/version
+        description: Return the current STRING database version and stable address
+        parameters:
+          - name: format
+            in: path
+            required: true
+            description: Output format (tsv, json, xml)
+common:
+  - type: TermsOfService
+    url: https://string-db.org/cgi/info?footer_active_subpage=cookies
+  - type: Licensing
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+  - type: UsageGuidelines
+    url: https://string-db.org/cgi/access?footer_active_subpage=usage
+  - type: APIDocumentation
+    url: https://string-db.org/help/api/
+  - type: Downloads
+    url: https://string-db.org/cgi/download
+maintainers:
+  - FN: STRING Consortium
+    url: https://string-db.org

@@ -1,0 +1,37 @@
+finops:
+  model: free-open-access
+  description: >
+    STRING is a publicly funded research database with no cost for API access.
+    All data is available under Creative Commons BY 4.0, permitting both
+    academic and commercial use at no charge. The database is operated by
+    the STRING Consortium (SIB, CPR/Novo Nordisk Foundation, and EMBL) and
+    funded through institutional and public research grants.
+  pricing:
+    - tier: All Users
+      cost: 0.00
+      currency: USD
+      billing: free
+      notes: >
+        No payment required. No subscription tiers. No per-request fees.
+        No data egress costs. Commercial use is permitted under CC-BY 4.0
+        with attribution requirement.
+  costDrivers:
+    - name: Attribution
+      description: >
+        Not a monetary cost, but users must provide appropriate credit when
+        using STRING data in publications, products, or services. Cite the
+        relevant STRING paper and attribute the data source.
+      monetary: false
+  budgetingNotes: >
+    Because STRING is entirely free, there are no direct financial costs to
+    model or budget for. Organizations should consider indirect costs such as
+    developer time for integration and any infrastructure needed to cache or
+    store results locally (to comply with the recommended 1-second delay
+    between requests). For large-scale use cases, downloading the full dataset
+    is more efficient than API polling and avoids any risk of server-side
+    throttling.
+  license:
+    type: Creative Commons BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+    commercialUse: true
+    attributionRequired: true

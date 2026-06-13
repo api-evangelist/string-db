@@ -1,0 +1,44 @@
+plans:
+  - name: Open Access
+    description: >
+      Free and open access to the STRING database and REST API for all users,
+      both academic and commercial. All data is provided under the Creative
+      Commons BY 4.0 license. No registration or subscription required for
+      standard API endpoints.
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+    price: 0.00
+    currency: USD
+    billing: free
+    features:
+      - Full access to all standard REST API endpoints
+      - Protein-protein interaction network data
+      - Functional enrichment analysis
+      - Homology and similarity data
+      - Network visualization (image, SVG, high-resolution)
+      - Multiple output formats (JSON, TSV, XML, PSI-MI)
+      - Access to 12,535 organisms and 59.3 million proteins
+      - Over 20 billion interactions available
+      - Commercial use permitted under CC-BY 4.0
+    limits:
+      - Wait 1 second between API calls (recommended)
+      - No parallel script execution
+      - Large-scale data requests should use downloads instead of API
+      - GET requests subject to URL length limits; use POST for large queries
+  - name: Values/Ranks Enrichment (API Key)
+    description: >
+      Free tier with API key required for advanced GSEA-like enrichment
+      analysis on ranked protein datasets. API key obtained via the
+      /api/json/get_api_key endpoint at no cost.
+    url: https://string-db.org/help/api/
+    price: 0.00
+    currency: USD
+    billing: free
+    features:
+      - All Open Access features
+      - GSEA-like enrichment analysis on ranked protein lists
+      - Up to 1000 concurrent analysis jobs
+      - No lifetime job limit
+      - Asynchronous job submission and status checking
+    limits:
+      - API key required (free, obtained via API)
+      - Up to 1000 concurrent jobs

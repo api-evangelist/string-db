@@ -1,0 +1,44 @@
+rateLimits:
+  - name: API Call Frequency
+    description: >
+      STRING recommends waiting at least 1 second between consecutive API
+      calls to avoid overloading the server. This is a soft recommendation
+      rather than a hard enforced limit, but repeated rapid requests may
+      result in server-side throttling or blocking.
+    url: https://string-db.org/cgi/access?footer_active_subpage=usage
+    period: second
+    limit: 1
+    unit: requests
+    enforcement: recommended
+    notes: >
+      The STRING API documentation explicitly states users should "wait 1
+      second between API calls to avoid overloading the server." Scripts
+      should NOT run in parallel against the STRING API.
+  - name: Parallel Requests
+    description: >
+      Parallel script execution against the STRING API is explicitly
+      discouraged. Users should run requests sequentially.
+    url: https://string-db.org/cgi/access?footer_active_subpage=usage
+    enforcement: discouraged
+    notes: >
+      For large-scale data needs, download the full dataset from the STRING
+      Download page instead of making bulk API requests.
+  - name: Values/Ranks Concurrent Jobs
+    description: >
+      The Values/Ranks Enrichment async API accepts up to 1000 concurrent
+      jobs per API key. There is no lifetime limit on the number of jobs.
+    url: https://string-db.org/help/api/
+    limit: 1000
+    unit: concurrent jobs
+    enforcement: hard
+    scope: per API key
+  - name: URL Length (GET Requests)
+    description: >
+      GET requests are subject to standard URL length limitations. For
+      queries with many protein identifiers, POST requests are strongly
+      recommended to avoid URL length truncation.
+    url: https://string-db.org/help/api/
+    enforcement: hard
+    notes: >
+      Use POST method with identifiers separated by newline characters
+      (\r or \n) for queries with multiple proteins or long identifier lists.
