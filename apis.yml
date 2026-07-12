@@ -397,6 +397,8 @@ apis:
             required: true
             description: Output format (tsv, json, xml)
 common:
+  - type: DomainSecurity
+    url: security/string-db-domain-security.yml
   - type: TermsOfService
     url: https://string-db.org/cgi/info?footer_active_subpage=cookies
   - type: Licensing
