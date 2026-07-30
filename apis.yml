@@ -6,6 +6,18 @@ description: >
   functional enrichment analysis, homology data, and protein annotations.
   STRING integrates data from genomic context, co-expression, text mining,
   biochemical and genetic experiments, and curated databases.
+accessModel:
+  pricing: free
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Free
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 image: https://string-db.org/images/logo/logo_medium.png
 tags:
   - Bioinformatics
