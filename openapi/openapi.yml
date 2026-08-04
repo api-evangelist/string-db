@@ -455,7 +455,7 @@ paths:
         - name: species_b
           in: query
           required: false
-          description: NCBI taxon ID for the target species (default: all species)
+          description: "NCBI taxon ID for the target species (default: all species)"
           schema:
             type: integer
             example: 10090
