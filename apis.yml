@@ -6,6 +6,7 @@ description: >
   functional enrichment analysis, homology data, and protein annotations.
   STRING integrates data from genomic context, co-expression, text mining,
   biochemical and genetic experiments, and curated databases.
+specificationVersion: '0.23'
 accessModel:
   pricing: free
   onboarding: unknown
