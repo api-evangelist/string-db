@@ -1,0 +1,286 @@
+{
+  "item": [
+    {
+      "id": "82bfb596-ea5e-49c0-a716-e4cdabdf3d8b",
+      "name": "utility",
+      "description": {
+        "content": "Utility endpoints (version, links, API key)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "982d0137-ee5f-4532-8a3e-c23c7e0d4891",
+          "name": "Version",
+          "request": {
+            "name": "Version",
+            "description": {
+              "content": "Return the current STRING database version number and stable address URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "118a6023-5f9d-46b0-bfd6-29d233765c6f",
+              "name": "Current STRING database version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"string_version\": \"12.0\",\n  \"stable_address\": \"https://version-12-0.string-db.org\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6f75c6d-ca23-47b0-850b-5f22d1e367d3",
+          "name": "Get API Key",
+          "request": {
+            "name": "Get API Key",
+            "description": {
+              "content": "Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "json",
+                "get_api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "(Required) Unique identifier for your application or organization"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4b370b76-5705-42bd-a621-e60fc8e9c6a7",
+              "name": "API key for Values/Ranks enrichment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "get_api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Unique identifier for your application or organization",
+                        "type": "text/plain"
+                      },
+                      "key": "caller_identity",
+                      "value": "my_lab_pipeline"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "968acfec-fe23-4ee3-b02c-5a7c90044159",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "get_api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Unique identifier for your application or organization",
+                        "type": "text/plain"
+                      },
+                      "key": "caller_identity",
+                      "value": "my_lab_pipeline"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 3208,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://string-db.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "318c9efa-7a1f-4a14-afaa-9e4ad8ab32e3",
+    "name": "STRING REST Utility API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.\n\n\nContact Support:\n Name: STRING Consortium",
+      "type": "text/plain"
+    }
+  }
+}

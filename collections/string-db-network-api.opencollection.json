@@ -1,0 +1,305 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "STRING REST Network API",
+    "version": "12.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "network",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Network Image or Interactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/network",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format (data or image)"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers (STRING IDs or gene names), newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "required_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+              },
+              {
+                "name": "network_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of STRING network to use"
+              },
+              {
+                "name": "network_flavor",
+                "value": "",
+                "type": "query",
+                "description": "Visual style for network edges"
+              },
+              {
+                "name": "add_color_nodes",
+                "value": "",
+                "type": "query",
+                "description": "Number of additional neighborhood proteins to add (shown in color)"
+              },
+              {
+                "name": "add_white_nodes",
+                "value": "",
+                "type": "query",
+                "description": "Number of additional neighborhood proteins to add (shown in white)"
+              },
+              {
+                "name": "hide_node_labels",
+                "value": "",
+                "type": "query",
+                "description": "Hide protein name labels on network nodes (1=hide, 0=show)"
+              },
+              {
+                "name": "hide_disconnected_nodes",
+                "value": "",
+                "type": "query",
+                "description": "Hide proteins with no interactions in the result set (1=hide)"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve a protein interaction network as an image or interaction data. Supports image formats (image, highres_image, svg) and data formats (tsv, json, xml, psi-mi, psi-mi-tab).\n"
+        },
+        {
+          "info": {
+            "name": "Network Image or Interactions (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://string-db.org/api/:format/network",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format (data or image)"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "identifiers",
+                  "value": ""
+                },
+                {
+                  "name": "species",
+                  "value": ""
+                },
+                {
+                  "name": "required_score",
+                  "value": ""
+                },
+                {
+                  "name": "network_type",
+                  "value": ""
+                },
+                {
+                  "name": "network_flavor",
+                  "value": ""
+                },
+                {
+                  "name": "add_color_nodes",
+                  "value": ""
+                },
+                {
+                  "name": "add_white_nodes",
+                  "value": ""
+                },
+                {
+                  "name": "caller_identity",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Retrieve a protein interaction network via POST. Recommended for queries with many identifiers.\n"
+        },
+        {
+          "info": {
+            "name": "Get Network Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/get_link",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "required_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+              },
+              {
+                "name": "network_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of STRING network to use"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Generate a stable URL linking to a STRING network viewer for the specified proteins."
+        },
+        {
+          "info": {
+            "name": "Interaction Partners",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/interaction_partners",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of interaction partners to return per protein"
+              },
+              {
+                "name": "required_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+              },
+              {
+                "name": "network_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of STRING network to use"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve all STRING interaction partners for a set of input proteins."
+        },
+        {
+          "info": {
+            "name": "Interaction Partners (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://string-db.org/api/:format/interaction_partners",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "identifiers",
+                  "value": ""
+                },
+                {
+                  "name": "species",
+                  "value": ""
+                },
+                {
+                  "name": "limit",
+                  "value": ""
+                },
+                {
+                  "name": "required_score",
+                  "value": ""
+                },
+                {
+                  "name": "network_type",
+                  "value": ""
+                },
+                {
+                  "name": "caller_identity",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Interaction Partners (POST)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

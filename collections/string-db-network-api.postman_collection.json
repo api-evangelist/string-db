@@ -1,0 +1,1186 @@
+{
+  "item": [
+    {
+      "id": "a2c4a37c-d22e-4d51-ba97-55a532264966",
+      "name": "network",
+      "description": {
+        "content": "Retrieve protein-protein interaction networks",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c542525f-b493-473e-8f8b-21120da082d9",
+          "name": "Network Image or Interactions",
+          "request": {
+            "name": "Network Image or Interactions",
+            "description": {
+              "content": "Retrieve a protein interaction network as an image or interaction data. Supports image formats (image, highres_image, svg) and data formats (tsv, json, xml, psi-mi, psi-mi-tab).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "network"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers (STRING IDs or gene names), newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "required_score",
+                  "value": "400",
+                  "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_type",
+                  "value": "functional",
+                  "description": "Type of STRING network to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_flavor",
+                  "value": "evidence",
+                  "description": "Visual style for network edges"
+                },
+                {
+                  "disabled": false,
+                  "key": "add_color_nodes",
+                  "value": "0",
+                  "description": "Number of additional neighborhood proteins to add (shown in color)"
+                },
+                {
+                  "disabled": false,
+                  "key": "add_white_nodes",
+                  "value": "0",
+                  "description": "Number of additional neighborhood proteins to add (shown in white)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_node_labels",
+                  "value": "0",
+                  "description": "Hide protein name labels on network nodes (1=hide, 0=show)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_disconnected_nodes",
+                  "value": "0",
+                  "description": "Hide proteins with no interactions in the result set (1=hide)"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format (data or image)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f88324a4-7700-49b2-a321-b66093890140",
+              "name": "Network data or image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "network_flavor",
+                      "value": "evidence"
+                    },
+                    {
+                      "key": "add_color_nodes",
+                      "value": "0"
+                    },
+                    {
+                      "key": "add_white_nodes",
+                      "value": "0"
+                    },
+                    {
+                      "key": "hide_node_labels",
+                      "value": "0"
+                    },
+                    {
+                      "key": "hide_disconnected_nodes",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format (data or image)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.709214764589723,\n    \"fscore\": 0.12894708972845237,\n    \"pscore\": 0.9607009410212766,\n    \"ascore\": 0.636992883002515,\n    \"escore\": 0.05961723382988615,\n    \"dscore\": 0.5791571518925079,\n    \"tscore\": 0.8197873380223641\n  },\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.8326419131103835,\n    \"fscore\": 0.7527624301258857,\n    \"pscore\": 0.3378498684385747,\n    \"ascore\": 0.5159270419719716,\n    \"escore\": 0.7164511705246485,\n    \"dscore\": 0.3776572444824666,\n    \"tscore\": 0.0013991238959961683\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0dc439d-cccb-4d65-acc2-f14928ca905e",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "network_flavor",
+                      "value": "evidence"
+                    },
+                    {
+                      "key": "add_color_nodes",
+                      "value": "0"
+                    },
+                    {
+                      "key": "add_white_nodes",
+                      "value": "0"
+                    },
+                    {
+                      "key": "hide_node_labels",
+                      "value": "0"
+                    },
+                    {
+                      "key": "hide_disconnected_nodes",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format (data or image)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5196,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19a83295-ee20-46e4-949f-39dd7d0eaf98",
+          "name": "Network Image or Interactions (POST)",
+          "request": {
+            "name": "Network Image or Interactions (POST)",
+            "description": {
+              "content": "Retrieve a protein interaction network via POST. Recommended for queries with many identifiers.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "network"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format (data or image)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "required_score",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_flavor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "add_color_nodes",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "add_white_nodes",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "03b89939-a106-4a3c-bbee-069d55a2f910",
+              "name": "Network data or image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format (data or image)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "species",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "required_score",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "network_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "network_flavor",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "add_color_nodes",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "add_white_nodes",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.709214764589723,\n    \"fscore\": 0.12894708972845237,\n    \"pscore\": 0.9607009410212766,\n    \"ascore\": 0.636992883002515,\n    \"escore\": 0.05961723382988615,\n    \"dscore\": 0.5791571518925079,\n    \"tscore\": 0.8197873380223641\n  },\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.8326419131103835,\n    \"fscore\": 0.7527624301258857,\n    \"pscore\": 0.3378498684385747,\n    \"ascore\": 0.5159270419719716,\n    \"escore\": 0.7164511705246485,\n    \"dscore\": 0.3776572444824666,\n    \"tscore\": 0.0013991238959961683\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7c5a5d2-39db-46f7-a3e7-6764b7c84def",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "network"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format (data or image)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "species",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "required_score",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "network_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "network_flavor",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "add_color_nodes",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "add_white_nodes",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5196,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9dfc5cc9-e98c-48ee-8924-cabef353e298",
+          "name": "Get Network Link",
+          "request": {
+            "name": "Get Network Link",
+            "description": {
+              "content": "Generate a stable URL linking to a STRING network viewer for the specified proteins.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "get_link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers, newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "required_score",
+                  "value": "400",
+                  "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_type",
+                  "value": "functional",
+                  "description": "Type of STRING network to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e826476-e580-44ae-a7b3-b756c09f9dcb",
+              "name": "Link to STRING network viewer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "get_link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"link\": \"http://eryNmsnwgqeZaQI.emstpS3IZRwdl3,TDi9lVWKNFmint63\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d5fd3b1-130b-4ab2-adcf-1657f006584c",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "get_link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5196,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "704d1ed2-7b77-435b-9a5c-a49917972579",
+          "name": "Interaction Partners",
+          "request": {
+            "name": "Interaction Partners",
+            "description": {
+              "content": "Retrieve all STRING interaction partners for a set of input proteins.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "interaction_partners"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers, newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of interaction partners to return per protein"
+                },
+                {
+                  "disabled": false,
+                  "key": "required_score",
+                  "value": "400",
+                  "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_type",
+                  "value": "functional",
+                  "description": "Type of STRING network to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80a8b163-2a54-4217-9e18-42e705d9bc60",
+              "name": "Interaction partners with scores",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "interaction_partners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.709214764589723,\n    \"fscore\": 0.12894708972845237,\n    \"pscore\": 0.9607009410212766,\n    \"ascore\": 0.636992883002515,\n    \"escore\": 0.05961723382988615,\n    \"dscore\": 0.5791571518925079,\n    \"tscore\": 0.8197873380223641\n  },\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.8326419131103835,\n    \"fscore\": 0.7527624301258857,\n    \"pscore\": 0.3378498684385747,\n    \"ascore\": 0.5159270419719716,\n    \"escore\": 0.7164511705246485,\n    \"dscore\": 0.3776572444824666,\n    \"tscore\": 0.0013991238959961683\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2a0209d-bf53-4290-8212-384211535700",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "interaction_partners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5196,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b683bf6-da9e-4d5a-aec0-46a6ea7b24dd",
+          "name": "Interaction Partners (POST)",
+          "request": {
+            "name": "Interaction Partners (POST)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "interaction_partners"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "required_score",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "af3d9a82-aefe-4abb-bf4d-67b8719b63b8",
+              "name": "Interaction partners with scores",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "interaction_partners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "species",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "required_score",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "network_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.709214764589723,\n    \"fscore\": 0.12894708972845237,\n    \"pscore\": 0.9607009410212766,\n    \"ascore\": 0.636992883002515,\n    \"escore\": 0.05961723382988615,\n    \"dscore\": 0.5791571518925079,\n    \"tscore\": 0.8197873380223641\n  },\n  {\n    \"stringId_A\": \"9606.ENSP00000269305\",\n    \"stringId_B\": \"9606.ENSP00000083083\",\n    \"preferredName_A\": \"TP53\",\n    \"preferredName_B\": \"MDM2\",\n    \"ncbiTaxonId\": 9606,\n    \"score\": 0.999,\n    \"nscore\": 0.8326419131103835,\n    \"fscore\": 0.7527624301258857,\n    \"pscore\": 0.3378498684385747,\n    \"ascore\": 0.5159270419719716,\n    \"escore\": 0.7164511705246485,\n    \"dscore\": 0.3776572444824666,\n    \"tscore\": 0.0013991238959961683\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://string-db.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "54a162c8-1146-45f6-84b1-ffb793808d65",
+    "name": "STRING REST Network API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.\n\n\nContact Support:\n Name: STRING Consortium",
+      "type": "text/plain"
+    }
+  }
+}

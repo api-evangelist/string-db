@@ -1,0 +1,476 @@
+openapi: 3.2.0
+info:
+  title: STRING REST Network API
+  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
+
+    '
+  version: '12.0'
+  contact:
+    name: STRING Consortium
+    url: https://string-db.org
+  license:
+    name: Creative Commons Attribution
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+  termsOfService: https://string-db.org/cgi/info?footer_active_subpage=cookies
+servers:
+- url: https://string-db.org
+  description: STRING Production Server
+security: []
+tags:
+- name: network
+  description: Retrieve protein-protein interaction networks
+paths:
+  /api/{format}/network:
+    get:
+      operationId: getNetwork
+      summary: Network Image or Interactions
+      description: 'Retrieve a protein interaction network as an image or interaction data. Supports image formats (image, highres_image, svg) and data formats (tsv, json, xml, psi-mi, psi-mi-tab).
+
+        '
+      tags:
+      - network
+      parameters:
+      - $ref: '#/components/parameters/formatFull'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers (STRING IDs or gene names), newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - $ref: '#/components/parameters/required_score'
+      - $ref: '#/components/parameters/network_type'
+      - name: network_flavor
+        in: query
+        required: false
+        description: Visual style for network edges
+        schema:
+          type: string
+          enum:
+          - evidence
+          - confidence
+          - actions
+          default: evidence
+      - name: add_color_nodes
+        in: query
+        required: false
+        description: Number of additional neighborhood proteins to add (shown in color)
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: add_white_nodes
+        in: query
+        required: false
+        description: Number of additional neighborhood proteins to add (shown in white)
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: hide_node_labels
+        in: query
+        required: false
+        description: Hide protein name labels on network nodes (1=hide, 0=show)
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+      - name: hide_disconnected_nodes
+        in: query
+        required: false
+        description: Hide proteins with no interactions in the result set (1=hide)
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Network data or image
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interaction'
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/svg+xml:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      operationId: getNetworkPost
+      summary: Network Image or Interactions (POST)
+      description: 'Retrieve a protein interaction network via POST. Recommended for queries with many identifiers.
+
+        '
+      tags:
+      - network
+      parameters:
+      - $ref: '#/components/parameters/formatFull'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - identifiers
+              properties:
+                identifiers:
+                  type: string
+                species:
+                  type: integer
+                required_score:
+                  type: integer
+                  minimum: 0
+                  maximum: 1000
+                network_type:
+                  type: string
+                  enum:
+                  - functional
+                  - physical
+                network_flavor:
+                  type: string
+                  enum:
+                  - evidence
+                  - confidence
+                  - actions
+                add_color_nodes:
+                  type: integer
+                add_white_nodes:
+                  type: integer
+                caller_identity:
+                  type: string
+      responses:
+        '200':
+          description: Network data or image
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/{format}/get_link:
+    get:
+      operationId: getNetworkLink
+      summary: Get Network Link
+      description: Generate a stable URL linking to a STRING network viewer for the specified proteins.
+      tags:
+      - network
+      parameters:
+      - $ref: '#/components/parameters/formatLink'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers, newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - $ref: '#/components/parameters/required_score'
+      - $ref: '#/components/parameters/network_type'
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Link to STRING network viewer
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: object
+                properties:
+                  link:
+                    type: string
+                    format: uri
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/{format}/interaction_partners:
+    get:
+      operationId: getInteractionPartners
+      summary: Interaction Partners
+      description: Retrieve all STRING interaction partners for a set of input proteins.
+      tags:
+      - network
+      parameters:
+      - $ref: '#/components/parameters/format'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers, newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of interaction partners to return per protein
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+      - $ref: '#/components/parameters/required_score'
+      - $ref: '#/components/parameters/network_type'
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Interaction partners with scores
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interaction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      operationId: getInteractionPartnersPost
+      summary: Interaction Partners (POST)
+      tags:
+      - network
+      parameters:
+      - $ref: '#/components/parameters/format'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - identifiers
+              properties:
+                identifiers:
+                  type: string
+                species:
+                  type: integer
+                limit:
+                  type: integer
+                required_score:
+                  type: integer
+                  minimum: 0
+                  maximum: 1000
+                network_type:
+                  type: string
+                  enum:
+                  - functional
+                  - physical
+                caller_identity:
+                  type: string
+      responses:
+        '200':
+          description: Interaction partners with scores
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interaction'
+components:
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
+  parameters:
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
+    network_type:
+      name: network_type
+      in: query
+      required: false
+      description: Type of STRING network to use
+      schema:
+        type: string
+        enum:
+        - functional
+        - physical
+        default: functional
+    formatFull:
+      name: format
+      in: path
+      required: true
+      description: Output format (data or image)
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        - psi-mi
+        - psi-mi-tab
+        - image
+        - highres_image
+        - svg
+        example: json
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
+    required_score:
+      name: required_score
+      in: query
+      required: false
+      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 400
+    formatLink:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - json
+        example: json
+  schemas:
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    Interaction:
+      type: object
+      description: Protein-protein interaction with component scores
+      properties:
+        stringId_A:
+          type: string
+          description: STRING identifier for protein A
+          example: 9606.ENSP00000269305
+        stringId_B:
+          type: string
+          description: STRING identifier for protein B
+          example: 9606.ENSP00000083083
+        preferredName_A:
+          type: string
+          description: Preferred name for protein A
+          example: TP53
+        preferredName_B:
+          type: string
+          description: Preferred name for protein B
+          example: MDM2
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID
+          example: 9606
+        score:
+          type: number
+          description: Combined interaction score (0-1)
+          minimum: 0
+          maximum: 1
+          example: 0.999
+        nscore:
+          type: number
+          description: Genomic neighborhood score
+          minimum: 0
+          maximum: 1
+        fscore:
+          type: number
+          description: Gene fusion score
+          minimum: 0
+          maximum: 1
+        pscore:
+          type: number
+          description: Phylogenetic co-occurrence score
+          minimum: 0
+          maximum: 1
+        ascore:
+          type: number
+          description: Co-expression score
+          minimum: 0
+          maximum: 1
+        escore:
+          type: number
+          description: Experimental evidence score
+          minimum: 0
+          maximum: 1
+        dscore:
+          type: number
+          description: Database/curated evidence score
+          minimum: 0
+          maximum: 1
+        tscore:
+          type: number
+          description: Text mining score
+          minimum: 0
+          maximum: 1
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: 'API key required only for Values/Ranks Enrichment endpoints. Obtain via POST /api/json/get_api_key. All other endpoints are publicly accessible without authentication.
+
+        '
+externalDocs:
+  description: STRING API Documentation
+  url: https://string-db.org/help/api/

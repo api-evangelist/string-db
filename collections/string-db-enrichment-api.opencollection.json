@@ -1,0 +1,197 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "STRING REST Enrichment API",
+    "version": "12.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "enrichment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Functional Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/enrichment",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "background_string_identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Custom background gene set as STRING identifiers for enrichment calculation"
+              },
+              {
+                "name": "allow_pubmed",
+                "value": "",
+                "type": "query",
+                "description": "Include PubMed text mining term enrichment (1=include)"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Perform functional enrichment analysis for a set of proteins. Returns enriched GO terms (biological process, molecular function, cellular component), KEGG pathways, Reactome pathways, Pfam domains, InterPro domains, SMART domains, and tissue/disease annotations.\n"
+        },
+        {
+          "info": {
+            "name": "Functional Enrichment (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://string-db.org/api/:format/enrichment",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "identifiers",
+                  "value": ""
+                },
+                {
+                  "name": "species",
+                  "value": ""
+                },
+                {
+                  "name": "background_string_identifiers",
+                  "value": ""
+                },
+                {
+                  "name": "allow_pubmed",
+                  "value": ""
+                },
+                {
+                  "name": "caller_identity",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Functional Enrichment (POST)"
+        },
+        {
+          "info": {
+            "name": "Enrichment Figure",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/enrichmentfigure",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Image format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Generate a visual figure (image) of enrichment analysis results for a protein set."
+        },
+        {
+          "info": {
+            "name": "PPI Enrichment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/ppi_enrichment",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "required_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+              },
+              {
+                "name": "network_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of STRING network to use"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Test whether the interactions in a set of proteins are more significant than expected by random chance given the size and connectivity of the proteome. Returns an observed interaction count, expected count, p-value, and average interaction score.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

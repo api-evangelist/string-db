@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "STRING REST Annotation API",
+    "version": "12.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "annotation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Functional Annotation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/functional_annotation",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "allow_pubmed",
+                "value": "",
+                "type": "query",
+                "description": "Include PubMed text mining annotations (1=include)"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve all functional annotations associated with input proteins. Includes GO terms, KEGG pathways, Pfam/InterPro/SMART domains, tissue expression (COMPARTMENTS), and disease associations.\n"
+        },
+        {
+          "info": {
+            "name": "Functional Terms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/functional_terms",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "Functional term identifier (e.g. GO:0008150, hsa00010, PF00069)"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Term category to restrict search"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve proteins and details associated with specific functional terms (GO terms, KEGG pathways, Reactome pathways, Pfam domains, etc.).\n"
+        },
+        {
+          "info": {
+            "name": "Gene Set Description",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/geneset_description",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve auto-generated textual descriptions for a set of proteins, summarizing the most relevant functional themes in the gene set.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,354 @@
+openapi: 3.2.0
+info:
+  title: STRING REST Enrichment API
+  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
+
+    '
+  version: '12.0'
+  contact:
+    name: STRING Consortium
+    url: https://string-db.org
+  license:
+    name: Creative Commons Attribution
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+  termsOfService: https://string-db.org/cgi/info?footer_active_subpage=cookies
+servers:
+- url: https://string-db.org
+  description: STRING Production Server
+security: []
+tags:
+- name: enrichment
+  description: Functional enrichment analysis
+paths:
+  /api/{format}/enrichment:
+    get:
+      operationId: getFunctionalEnrichment
+      summary: Functional Enrichment
+      description: 'Perform functional enrichment analysis for a set of proteins. Returns enriched GO terms (biological process, molecular function, cellular component), KEGG pathways, Reactome pathways, Pfam domains, InterPro domains, SMART domains, and tissue/disease annotations.
+
+        '
+      tags:
+      - enrichment
+      parameters:
+      - $ref: '#/components/parameters/format'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers, newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - name: background_string_identifiers
+        in: query
+        required: false
+        description: Custom background gene set as STRING identifiers for enrichment calculation
+        schema:
+          type: string
+      - name: allow_pubmed
+        in: query
+        required: false
+        description: Include PubMed text mining term enrichment (1=include)
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Enriched functional terms with statistics
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnrichmentResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      operationId: getFunctionalEnrichmentPost
+      summary: Functional Enrichment (POST)
+      tags:
+      - enrichment
+      parameters:
+      - $ref: '#/components/parameters/format'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - identifiers
+              properties:
+                identifiers:
+                  type: string
+                species:
+                  type: integer
+                background_string_identifiers:
+                  type: string
+                allow_pubmed:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                caller_identity:
+                  type: string
+      responses:
+        '200':
+          description: Enriched functional terms
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnrichmentResult'
+  /api/{format}/enrichmentfigure:
+    get:
+      operationId: getEnrichmentFigure
+      summary: Enrichment Figure
+      description: Generate a visual figure (image) of enrichment analysis results for a protein set.
+      tags:
+      - enrichment
+      parameters:
+      - $ref: '#/components/parameters/formatImage'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers, newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Enrichment figure image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/svg+xml:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/{format}/ppi_enrichment:
+    get:
+      operationId: getPpiEnrichment
+      summary: PPI Enrichment
+      description: 'Test whether the interactions in a set of proteins are more significant than expected by random chance given the size and connectivity of the proteome. Returns an observed interaction count, expected count, p-value, and average interaction score.
+
+        '
+      tags:
+      - enrichment
+      parameters:
+      - $ref: '#/components/parameters/formatPpi'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers, newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - $ref: '#/components/parameters/required_score'
+      - $ref: '#/components/parameters/network_type'
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: PPI enrichment statistics
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PpiEnrichment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  parameters:
+    formatPpi:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - json
+        - xml
+        example: json
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
+    network_type:
+      name: network_type
+      in: query
+      required: false
+      description: Type of STRING network to use
+      schema:
+        type: string
+        enum:
+        - functional
+        - physical
+        default: functional
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
+    required_score:
+      name: required_score
+      in: query
+      required: false
+      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 400
+    formatImage:
+      name: format
+      in: path
+      required: true
+      description: Image format
+      schema:
+        type: string
+        enum:
+        - image
+        - highres_image
+        - svg
+        example: image
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
+  schemas:
+    EnrichmentResult:
+      type: object
+      description: Functional enrichment result for one term
+      properties:
+        category:
+          type: string
+          description: 'Functional annotation category (e.g. Process, KEGG, Pfam, RCTM, Tissue)
+
+            '
+          example: Process
+        term:
+          type: string
+          description: Functional term identifier
+          example: GO:0006915
+        number_of_genes:
+          type: integer
+          description: Number of input genes annotated to this term
+        number_of_genes_in_background:
+          type: integer
+          description: Number of background genes annotated to this term
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID
+        inputGenes:
+          type: string
+          description: Comma-separated list of input gene names annotated to this term
+        preferredNames:
+          type: string
+          description: Comma-separated list of preferred gene names
+        p_value:
+          type: number
+          description: Enrichment p-value (hypergeometric test)
+          example: 1.23e-10
+        fdr:
+          type: number
+          description: False discovery rate (Benjamini-Hochberg corrected)
+          example: 4.56e-08
+        description:
+          type: string
+          description: Human-readable name of the functional term
+          example: apoptotic process
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+    PpiEnrichment:
+      type: object
+      description: PPI enrichment statistics for the input protein set
+      properties:
+        number_of_nodes:
+          type: integer
+          description: Number of proteins in the input set
+        number_of_edges:
+          type: integer
+          description: Observed number of interactions
+        average_node_degree:
+          type: number
+          description: Average number of interaction partners per protein
+        local_clustering_coefficient:
+          type: number
+          description: Average local clustering coefficient
+        expected_number_of_edges:
+          type: number
+          description: Expected number of interactions at random
+        p_value:
+          type: number
+          description: P-value for interaction enrichment
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: 'API key required only for Values/Ranks Enrichment endpoints. Obtain via POST /api/json/get_api_key. All other endpoints are publicly accessible without authentication.
+
+        '
+externalDocs:
+  description: STRING API Documentation
+  url: https://string-db.org/help/api/

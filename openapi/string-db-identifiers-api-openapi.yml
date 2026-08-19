@@ -1,0 +1,227 @@
+openapi: 3.2.0
+info:
+  title: STRING REST Identifiers API
+  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
+
+    '
+  version: '12.0'
+  contact:
+    name: STRING Consortium
+    url: https://string-db.org
+  license:
+    name: Creative Commons Attribution
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+  termsOfService: https://string-db.org/cgi/info?footer_active_subpage=cookies
+servers:
+- url: https://string-db.org
+  description: STRING Production Server
+security: []
+tags:
+- name: identifiers
+  description: Map protein names and synonyms to STRING identifiers
+paths:
+  /api/{format}/get_string_ids:
+    get:
+      operationId: getStringIds
+      summary: Get STRING IDs
+      description: 'Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. Use the returned STRING IDs in subsequent API calls for best performance.
+
+        '
+      tags:
+      - identifiers
+      parameters:
+      - $ref: '#/components/parameters/format'
+      - name: identifiers
+        in: query
+        required: true
+        description: 'Protein identifiers to map (names, synonyms, UniProt IDs). Separate multiple identifiers with URL-encoded newline (%0d) for GET requests, or actual newline/carriage-return for POST requests.
+
+          '
+        schema:
+          type: string
+          example: TP53%0dEGFR%0dBRCA1
+      - $ref: '#/components/parameters/species'
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of matches to return per input identifier
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: echo_query
+        in: query
+        required: false
+        description: If 1, include the original query identifier in the output
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Mapped STRING identifiers
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StringIdMapping'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/XmlResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      operationId: getStringIdsPost
+      summary: Get STRING IDs (POST)
+      description: 'Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. POST is recommended for queries with many identifiers.
+
+        '
+      tags:
+      - identifiers
+      parameters:
+      - $ref: '#/components/parameters/format'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - identifiers
+              properties:
+                identifiers:
+                  type: string
+                  description: Newline-separated protein identifiers
+                species:
+                  type: integer
+                  description: NCBI taxon ID (e.g. 9606 for human)
+                limit:
+                  type: integer
+                  default: 1
+                echo_query:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+                  default: 0
+                caller_identity:
+                  type: string
+      responses:
+        '200':
+          description: Mapped STRING identifiers
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StringIdMapping'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
+  parameters:
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
+  schemas:
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+    XmlResponse:
+      type: string
+      description: XML-formatted response
+    StringIdMapping:
+      type: object
+      description: Mapping from input identifier to STRING protein ID
+      properties:
+        queryIndex:
+          type: integer
+          description: Index of the input identifier in the query
+        stringId:
+          type: string
+          description: STRING protein identifier (e.g. 9606.ENSP00000269305)
+          example: 9606.ENSP00000269305
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID of the matched protein
+          example: 9606
+        taxonName:
+          type: string
+          description: Scientific name of the organism
+          example: Homo sapiens
+        preferredName:
+          type: string
+          description: Preferred gene/protein name in STRING
+          example: TP53
+        annotation:
+          type: string
+          description: Short functional annotation
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: 'API key required only for Values/Ranks Enrichment endpoints. Obtain via POST /api/json/get_api_key. All other endpoints are publicly accessible without authentication.
+
+        '
+externalDocs:
+  description: STRING API Documentation
+  url: https://string-db.org/help/api/

@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "STRING REST Homology API",
+    "version": "12.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "homology",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Homology",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/homology",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers, newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Return Smith-Waterman bit scores between all pairs of proteins in the input set.\n"
+        },
+        {
+          "info": {
+            "name": "Best Homology",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/homology_best",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers (source species), newline-separated (%0d in URL)"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "species_b",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID for the target species (default: all species)"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Return the best cross-species homology hits for input proteins. Useful for finding orthologs across species.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

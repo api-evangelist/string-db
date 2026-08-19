@@ -1,0 +1,285 @@
+openapi: 3.2.0
+info:
+  title: STRING REST Valuesranks API
+  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
+
+    '
+  version: '12.0'
+  contact:
+    name: STRING Consortium
+    url: https://string-db.org
+  license:
+    name: Creative Commons Attribution
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+  termsOfService: https://string-db.org/cgi/info?footer_active_subpage=cookies
+servers:
+- url: https://string-db.org
+  description: STRING Production Server
+security: []
+tags:
+- name: valuesranks
+  description: Values/Ranks GSEA-like enrichment (requires API key)
+paths:
+  /api/json/get_api_key:
+    post:
+      operationId: getApiKey
+      summary: Get API Key
+      description: 'Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.
+
+        '
+      tags:
+      - valuesranks
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - caller_identity
+              properties:
+                caller_identity:
+                  type: string
+                  description: Unique identifier for your application or organization
+                  example: my_lab_pipeline
+      responses:
+        '200':
+          description: API key for Values/Ranks enrichment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/json/valuesranks_enrichment_submit:
+    post:
+      operationId: submitValuesRanksEnrichment
+      summary: Submit Values/Ranks Enrichment Job
+      description: 'Submit a GSEA-like enrichment analysis on a ranked list of proteins with associated numeric values (e.g. fold-change, log p-value). Accepts up to 1000 concurrent jobs per API key. Returns a job_id to poll with the status endpoint.
+
+        '
+      tags:
+      - valuesranks
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - api_key
+              - identifiers
+              - species
+              properties:
+                api_key:
+                  type: string
+                  description: API key obtained via the get_api_key endpoint
+                identifiers:
+                  type: string
+                  description: 'Tab-separated protein-value pairs, one per line. Each line: STRING_ID<TAB>numeric_value
+
+                    '
+                species:
+                  type: integer
+                  description: NCBI taxon ID
+                  example: 9606
+                ge_fdr:
+                  type: number
+                  description: False discovery rate threshold for significance (default 0.01)
+                  default: 0.01
+                  minimum: 0
+                  maximum: 1
+                caller_identity:
+                  type: string
+                  description: Identifier for your application
+      responses:
+        '200':
+          description: Job submission confirmation with job ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobSubmission'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/json/valuesranks_enrichment_status:
+    get:
+      operationId: getValuesRanksEnrichmentStatus
+      summary: Check Values/Ranks Enrichment Status
+      description: 'Check the status of a submitted Values/Ranks enrichment job. When status is "done", the response also includes the enrichment results.
+
+        '
+      tags:
+      - valuesranks
+      parameters:
+      - name: api_key
+        in: query
+        required: true
+        description: API key used to submit the job
+        schema:
+          type: string
+      - name: job_id
+        in: query
+        required: true
+        description: Job ID returned from the submit endpoint
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Job status and results (when complete)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatus'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/json/valuesranks_enrichment_remove:
+    get:
+      operationId: removeValuesRanksEnrichmentJob
+      summary: Remove Values/Ranks Enrichment Job
+      description: Remove a submitted or completed Values/Ranks enrichment job to free up the slot.
+      tags:
+      - valuesranks
+      parameters:
+      - name: api_key
+        in: query
+        required: true
+        description: API key used to submit the job
+        schema:
+          type: string
+      - name: job_id
+        in: query
+        required: true
+        description: Job ID to remove
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Job removal confirmation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    EnrichmentResult:
+      type: object
+      description: Functional enrichment result for one term
+      properties:
+        category:
+          type: string
+          description: 'Functional annotation category (e.g. Process, KEGG, Pfam, RCTM, Tissue)
+
+            '
+          example: Process
+        term:
+          type: string
+          description: Functional term identifier
+          example: GO:0006915
+        number_of_genes:
+          type: integer
+          description: Number of input genes annotated to this term
+        number_of_genes_in_background:
+          type: integer
+          description: Number of background genes annotated to this term
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID
+        inputGenes:
+          type: string
+          description: Comma-separated list of input gene names annotated to this term
+        preferredNames:
+          type: string
+          description: Comma-separated list of preferred gene names
+        p_value:
+          type: number
+          description: Enrichment p-value (hypergeometric test)
+          example: 1.23e-10
+        fdr:
+          type: number
+          description: False discovery rate (Benjamini-Hochberg corrected)
+          example: 4.56e-08
+        description:
+          type: string
+          description: Human-readable name of the functional term
+          example: apoptotic process
+    JobStatus:
+      type: object
+      description: Job status and results
+      properties:
+        status:
+          type: string
+          enum:
+          - queued
+          - running
+          - done
+          - error
+          description: Current job status
+        job_id:
+          type: string
+          description: Job identifier
+        results:
+          type: array
+          description: Enrichment results (only present when status is "done")
+          items:
+            $ref: '#/components/schemas/EnrichmentResult'
+    ApiKey:
+      type: object
+      description: API key for Values/Ranks enrichment endpoints
+      properties:
+        api_key:
+          type: string
+          description: The API key to use in subsequent Values/Ranks requests
+    JobSubmission:
+      type: object
+      description: Job submission response
+      properties:
+        job_id:
+          type: string
+          description: Unique job identifier for polling
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
+    Unauthorized:
+      description: Invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: 'API key required only for Values/Ranks Enrichment endpoints. Obtain via POST /api/json/get_api_key. All other endpoints are publicly accessible without authentication.
+
+        '
+externalDocs:
+  description: STRING API Documentation
+  url: https://string-db.org/help/api/

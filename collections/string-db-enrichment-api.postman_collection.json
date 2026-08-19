@@ -1,0 +1,783 @@
+{
+  "item": [
+    {
+      "id": "b854c178-efbf-4ab4-baca-cd1959ebe965",
+      "name": "enrichment",
+      "description": {
+        "content": "Functional enrichment analysis",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "da0995e0-a268-4d2a-9883-3b31d070e23e",
+          "name": "Functional Enrichment",
+          "request": {
+            "name": "Functional Enrichment",
+            "description": {
+              "content": "Perform functional enrichment analysis for a set of proteins. Returns enriched GO terms (biological process, molecular function, cellular component), KEGG pathways, Reactome pathways, Pfam domains, InterPro domains, SMART domains, and tissue/disease annotations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "enrichment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers, newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "background_string_identifiers",
+                  "value": "<string>",
+                  "description": "Custom background gene set as STRING identifiers for enrichment calculation"
+                },
+                {
+                  "disabled": false,
+                  "key": "allow_pubmed",
+                  "value": "0",
+                  "description": "Include PubMed text mining term enrichment (1=include)"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ccfb3b62-1118-4ed3-b28e-9d2e4bf6b9b5",
+              "name": "Enriched functional terms with statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "enrichment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "background_string_identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "allow_pubmed",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"category\": \"Process\",\n    \"term\": \"GO:0006915\",\n    \"number_of_genes\": 1144,\n    \"number_of_genes_in_background\": 3618,\n    \"ncbiTaxonId\": 1299,\n    \"inputGenes\": \"string\",\n    \"preferredNames\": \"string\",\n    \"p_value\": 1.23e-10,\n    \"fdr\": 4.56e-8,\n    \"description\": \"apoptotic process\"\n  },\n  {\n    \"category\": \"Process\",\n    \"term\": \"GO:0006915\",\n    \"number_of_genes\": 6313,\n    \"number_of_genes_in_background\": 9447,\n    \"ncbiTaxonId\": 8672,\n    \"inputGenes\": \"string\",\n    \"preferredNames\": \"string\",\n    \"p_value\": 1.23e-10,\n    \"fdr\": 4.56e-8,\n    \"description\": \"apoptotic process\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "946769ad-63f9-4d99-a461-036e538620ff",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "enrichment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "background_string_identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "allow_pubmed",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5075,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85d3f26d-6af8-4107-8b8d-9f2225092a1d",
+          "name": "Functional Enrichment (POST)",
+          "request": {
+            "name": "Functional Enrichment (POST)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "enrichment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "background_string_identifiers",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "allow_pubmed",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "214d4292-7843-4777-878c-238085b1f176",
+              "name": "Enriched functional terms",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "enrichment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "species",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "background_string_identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "allow_pubmed",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"category\": \"Process\",\n    \"term\": \"GO:0006915\",\n    \"number_of_genes\": 1144,\n    \"number_of_genes_in_background\": 3618,\n    \"ncbiTaxonId\": 1299,\n    \"inputGenes\": \"string\",\n    \"preferredNames\": \"string\",\n    \"p_value\": 1.23e-10,\n    \"fdr\": 4.56e-8,\n    \"description\": \"apoptotic process\"\n  },\n  {\n    \"category\": \"Process\",\n    \"term\": \"GO:0006915\",\n    \"number_of_genes\": 6313,\n    \"number_of_genes_in_background\": 9447,\n    \"ncbiTaxonId\": 8672,\n    \"inputGenes\": \"string\",\n    \"preferredNames\": \"string\",\n    \"p_value\": 1.23e-10,\n    \"fdr\": 4.56e-8,\n    \"description\": \"apoptotic process\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6eb45adf-f66e-4954-821b-e60a96f1412d",
+          "name": "Enrichment Figure",
+          "request": {
+            "name": "Enrichment Figure",
+            "description": {
+              "content": "Generate a visual figure (image) of enrichment analysis results for a protein set.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "enrichmentfigure"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers, newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Image format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64b7639a-b420-449d-80ed-e5b66c04be37",
+              "name": "Enrichment figure image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "enrichmentfigure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Image format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "image/png"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/png"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7449f717-2d97-4cb1-a449-8bd42034a2da",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "enrichmentfigure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Image format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5075,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4952ae71-5f3e-4d8f-b51f-bdcc67f01c9c",
+          "name": "PPI Enrichment",
+          "request": {
+            "name": "PPI Enrichment",
+            "description": {
+              "content": "Test whether the interactions in a set of proteins are more significant than expected by random chance given the size and connectivity of the proteome. Returns an observed interaction count, expected count, p-value, and average interaction score.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "ppi_enrichment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers, newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "required_score",
+                  "value": "400",
+                  "description": "Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "network_type",
+                  "value": "functional",
+                  "description": "Type of STRING network to use"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "375296a6-c22b-4775-848e-09ef2360e0c3",
+              "name": "PPI enrichment statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "ppi_enrichment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"number_of_nodes\": 8047,\n  \"number_of_edges\": 768,\n  \"average_node_degree\": 1403.6911305388867,\n  \"local_clustering_coefficient\": 4637.039403954556,\n  \"expected_number_of_edges\": 3438.750655319469,\n  \"p_value\": 8078.745138794879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf3f6d8a-8327-4ad3-b491-ac912e09331e",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "ppi_enrichment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "required_score",
+                      "value": "400"
+                    },
+                    {
+                      "key": "network_type",
+                      "value": "functional"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5075,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://string-db.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0501664a-cbd1-4427-bbd0-974205b48187",
+    "name": "STRING REST Enrichment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.\n\n\nContact Support:\n Name: STRING Consortium",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "STRING REST Identifiers API",
+    "version": "12.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "identifiers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get STRING IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/:format/get_string_ids",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              },
+              {
+                "name": "identifiers",
+                "value": "",
+                "type": "query",
+                "description": "Protein identifiers to map (names, synonyms, UniProt IDs). Separate multiple identifiers with URL-encoded newline (%0d) for GET requests, or actual newline/carriage-return for POST requests.\n"
+              },
+              {
+                "name": "species",
+                "value": "",
+                "type": "query",
+                "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of matches to return per input identifier"
+              },
+              {
+                "name": "echo_query",
+                "value": "",
+                "type": "query",
+                "description": "If 1, include the original query identifier in the output"
+              },
+              {
+                "name": "caller_identity",
+                "value": "",
+                "type": "query",
+                "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+              }
+            ]
+          },
+          "docs": "Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. Use the returned STRING IDs in subsequent API calls for best performance.\n"
+        },
+        {
+          "info": {
+            "name": "Get STRING IDs (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://string-db.org/api/:format/get_string_ids",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "path",
+                "description": "Output format"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "identifiers",
+                  "value": ""
+                },
+                {
+                  "name": "species",
+                  "value": ""
+                },
+                {
+                  "name": "limit",
+                  "value": ""
+                },
+                {
+                  "name": "echo_query",
+                  "value": ""
+                },
+                {
+                  "name": "caller_identity",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. POST is recommended for queries with many identifiers.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

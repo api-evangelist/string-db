@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "STRING REST Valuesranks API",
+    "version": "12.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "valuesranks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://string-db.org/api/json/get_api_key",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "caller_identity",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.\n"
+        },
+        {
+          "info": {
+            "name": "Submit Values/Ranks Enrichment Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://string-db.org/api/json/valuesranks_enrichment_submit",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "api_key",
+                  "value": ""
+                },
+                {
+                  "name": "identifiers",
+                  "value": ""
+                },
+                {
+                  "name": "species",
+                  "value": ""
+                },
+                {
+                  "name": "ge_fdr",
+                  "value": ""
+                },
+                {
+                  "name": "caller_identity",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Submit a GSEA-like enrichment analysis on a ranked list of proteins with associated numeric values (e.g. fold-change, log p-value). Accepts up to 1000 concurrent jobs per API key. Returns a job_id to poll with the status endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Check Values/Ranks Enrichment Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/json/valuesranks_enrichment_status",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key used to submit the job"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "query",
+                "description": "Job ID returned from the submit endpoint"
+              }
+            ]
+          },
+          "docs": "Check the status of a submitted Values/Ranks enrichment job. When status is \"done\", the response also includes the enrichment results.\n"
+        },
+        {
+          "info": {
+            "name": "Remove Values/Ranks Enrichment Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://string-db.org/api/json/valuesranks_enrichment_remove",
+            "params": [
+              {
+                "name": "api_key",
+                "value": "",
+                "type": "query",
+                "description": "API key used to submit the job"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "query",
+                "description": "Job ID to remove"
+              }
+            ]
+          },
+          "docs": "Remove a submitted or completed Values/Ranks enrichment job to free up the slot."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

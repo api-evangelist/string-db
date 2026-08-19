@@ -1,0 +1,600 @@
+{
+  "item": [
+    {
+      "id": "0552a2f5-7840-4735-b6c8-e0ec596cc9d6",
+      "name": "annotation",
+      "description": {
+        "content": "Functional annotations and term lookup",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1fd34f70-5a33-4150-8894-f4cee21da810",
+          "name": "Functional Annotation",
+          "request": {
+            "name": "Functional Annotation",
+            "description": {
+              "content": "Retrieve all functional annotations associated with input proteins. Includes GO terms, KEGG pathways, Pfam/InterPro/SMART domains, tissue expression (COMPARTMENTS), and disease associations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "functional_annotation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers, newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "allow_pubmed",
+                  "value": "0",
+                  "description": "Include PubMed text mining annotations (1=include)"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3b83c8eb-a0ff-4df8-8986-c8df78f81825",
+              "name": "Functional annotations for the proteins",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "functional_annotation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "allow_pubmed",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"stringId\": \"string\",\n    \"ncbiTaxonId\": 39,\n    \"taxonName\": \"string\",\n    \"preferredName\": \"string\",\n    \"category\": \"string\",\n    \"term\": \"string\",\n    \"description\": \"string\"\n  },\n  {\n    \"stringId\": \"string\",\n    \"ncbiTaxonId\": 6109,\n    \"taxonName\": \"string\",\n    \"preferredName\": \"string\",\n    \"category\": \"string\",\n    \"term\": \"string\",\n    \"description\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20896087-371e-4a6e-a2f5-db75780f5292",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "functional_annotation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "allow_pubmed",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8833,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eaf3d4fd-4f28-47e2-8094-e0da0e3f4cfc",
+          "name": "Functional Terms",
+          "request": {
+            "name": "Functional Terms",
+            "description": {
+              "content": "Retrieve proteins and details associated with specific functional terms (GO terms, KEGG pathways, Reactome pathways, Pfam domains, etc.).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "functional_terms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifier",
+                  "value": "<string>",
+                  "description": "(Required) Functional term identifier (e.g. GO:0008150, hsa00010, PF00069)"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Term category to restrict search"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "81ff7895-d3e0-4e50-9dd8-e9a429cdbd17",
+              "name": "Proteins and details associated with the functional term",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "functional_terms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifier",
+                      "value": "GO:0008150"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"category\": \"string\",\n    \"term\": \"string\",\n    \"description\": \"string\",\n    \"preferredName\": \"string\",\n    \"stringId\": \"string\"\n  },\n  {\n    \"category\": \"string\",\n    \"term\": \"string\",\n    \"description\": \"string\",\n    \"preferredName\": \"string\",\n    \"stringId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bf1515e-e358-4f94-b006-ff958c6ed6b4",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "functional_terms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifier",
+                      "value": "GO:0008150"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8833,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ad52fb95-30d9-4056-a0f4-3bf395c2dfec",
+          "name": "Gene Set Description",
+          "request": {
+            "name": "Gene Set Description",
+            "description": {
+              "content": "Retrieve auto-generated textual descriptions for a set of proteins, summarizing the most relevant functional themes in the gene set.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "geneset_description"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers, newline-separated (%0d in URL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6d37385-42f3-4c2c-a717-b69e580bde57",
+              "name": "Textual descriptions for the gene set",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "geneset_description"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"description\": \"string\",\n    \"ncbiTaxonId\": 5118\n  },\n  {\n    \"description\": \"string\",\n    \"ncbiTaxonId\": 1310\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5f08951-4b39-4548-9ee8-f1e3f016bdf9",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "geneset_description"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 8833,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://string-db.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "27687981-6121-4146-b24a-e8771a815f24",
+    "name": "STRING REST Annotation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.\n\n\nContact Support:\n Name: STRING Consortium",
+      "type": "text/plain"
+    }
+  }
+}

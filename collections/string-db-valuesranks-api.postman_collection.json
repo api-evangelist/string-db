@@ -1,0 +1,894 @@
+{
+  "item": [
+    {
+      "id": "645173e1-594d-4ae7-8a80-da7a0712cff5",
+      "name": "valuesranks",
+      "description": {
+        "content": "Values/Ranks GSEA-like enrichment (requires API key)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a41cc11-5b61-40f3-97ac-0dfb78913446",
+          "name": "Get API Key",
+          "request": {
+            "name": "Get API Key",
+            "description": {
+              "content": "Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "json",
+                "get_api_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "(Required) Unique identifier for your application or organization"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2f9c12f6-262f-43ab-9409-2c9c8f543b94",
+              "name": "API key for Values/Ranks enrichment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "get_api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Unique identifier for your application or organization",
+                        "type": "text/plain"
+                      },
+                      "key": "caller_identity",
+                      "value": "my_lab_pipeline"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9c12988-94d4-4cdb-98e0-77d3084478fa",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "get_api_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Unique identifier for your application or organization",
+                        "type": "text/plain"
+                      },
+                      "key": "caller_identity",
+                      "value": "my_lab_pipeline"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5576,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd384ab6-de0e-45b9-8328-b68f974100b1",
+          "name": "Submit Values/Ranks Enrichment Job",
+          "request": {
+            "name": "Submit Values/Ranks Enrichment Job",
+            "description": {
+              "content": "Submit a GSEA-like enrichment analysis on a ranked list of proteins with associated numeric values (e.g. fold-change, log p-value). Accepts up to 1000 concurrent jobs per API key. Returns a job_id to poll with the status endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "json",
+                "valuesranks_enrichment_submit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key obtained via the get_api_key endpoint"
+                },
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Tab-separated protein-value pairs, one per line. Each line: STRING_ID<TAB>numeric_value\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "(Required) NCBI taxon ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "ge_fdr",
+                  "value": "0.01",
+                  "description": "False discovery rate threshold for significance (default 0.01)"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "Identifier for your application"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f77957ad-4105-4ac6-aa0c-9f2536f2d80b",
+              "name": "Job submission confirmation with job ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) API key obtained via the get_api_key endpoint",
+                        "type": "text/plain"
+                      },
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Tab-separated protein-value pairs, one per line. Each line: STRING_ID<TAB>numeric_value\n",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) NCBI taxon ID",
+                        "type": "text/plain"
+                      },
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "False discovery rate threshold for significance (default 0.01)",
+                        "type": "text/plain"
+                      },
+                      "key": "ge_fdr",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Identifier for your application",
+                        "type": "text/plain"
+                      },
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "752ac347-30f0-462b-9fb0-5d1e12370d50",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) API key obtained via the get_api_key endpoint",
+                        "type": "text/plain"
+                      },
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Tab-separated protein-value pairs, one per line. Each line: STRING_ID<TAB>numeric_value\n",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) NCBI taxon ID",
+                        "type": "text/plain"
+                      },
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "False discovery rate threshold for significance (default 0.01)",
+                        "type": "text/plain"
+                      },
+                      "key": "ge_fdr",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Identifier for your application",
+                        "type": "text/plain"
+                      },
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5576,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08ae18b1-5e44-4460-b402-872808051c24",
+              "name": "Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) API key obtained via the get_api_key endpoint",
+                        "type": "text/plain"
+                      },
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Tab-separated protein-value pairs, one per line. Each line: STRING_ID<TAB>numeric_value\n",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) NCBI taxon ID",
+                        "type": "text/plain"
+                      },
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "False discovery rate threshold for significance (default 0.01)",
+                        "type": "text/plain"
+                      },
+                      "key": "ge_fdr",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Identifier for your application",
+                        "type": "text/plain"
+                      },
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5576,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b3fa262-4440-4a3a-8bdb-65d65127c638",
+          "name": "Check Values/Ranks Enrichment Status",
+          "request": {
+            "name": "Check Values/Ranks Enrichment Status",
+            "description": {
+              "content": "Check the status of a submitted Values/Ranks enrichment job. When status is \"done\", the response also includes the enrichment results.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "json",
+                "valuesranks_enrichment_status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key used to submit the job"
+                },
+                {
+                  "disabled": false,
+                  "key": "job_id",
+                  "value": "<string>",
+                  "description": "(Required) Job ID returned from the submit endpoint"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7879ea0d-ba4b-47df-b149-e2cc3af15e92",
+              "name": "Job status and results (when complete)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "job_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"running\",\n  \"job_id\": \"string\",\n  \"results\": [\n    {\n      \"category\": \"Process\",\n      \"term\": \"GO:0006915\",\n      \"number_of_genes\": 9228,\n      \"number_of_genes_in_background\": 4983,\n      \"ncbiTaxonId\": 406,\n      \"inputGenes\": \"string\",\n      \"preferredNames\": \"string\",\n      \"p_value\": 1.23e-10,\n      \"fdr\": 4.56e-8,\n      \"description\": \"apoptotic process\"\n    },\n    {\n      \"category\": \"Process\",\n      \"term\": \"GO:0006915\",\n      \"number_of_genes\": 4275,\n      \"number_of_genes_in_background\": 9675,\n      \"ncbiTaxonId\": 8177,\n      \"inputGenes\": \"string\",\n      \"preferredNames\": \"string\",\n      \"p_value\": 1.23e-10,\n      \"fdr\": 4.56e-8,\n      \"description\": \"apoptotic process\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c39fc5c2-b11e-4e6d-b62f-a5ca10cc983f",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "job_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5576,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "809b4923-ac5e-4e76-a489-726f81bd1467",
+              "name": "Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "job_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5576,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a24ee05-dd0f-41ac-a0d0-d8d09856e455",
+          "name": "Remove Values/Ranks Enrichment Job",
+          "request": {
+            "name": "Remove Values/Ranks Enrichment Job",
+            "description": {
+              "content": "Remove a submitted or completed Values/Ranks enrichment job to free up the slot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "json",
+                "valuesranks_enrichment_remove"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api_key",
+                  "value": "<string>",
+                  "description": "(Required) API key used to submit the job"
+                },
+                {
+                  "disabled": false,
+                  "key": "job_id",
+                  "value": "<string>",
+                  "description": "(Required) Job ID to remove"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a4462fc-d0b1-4726-b484-03a235fbbe8c",
+              "name": "Job removal confirmation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_remove"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "job_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fd57543-0c31-4bbc-ac73-a61acc0e57bd",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_remove"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "job_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5576,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a57100e1-b714-4ee3-b667-ce6de311cc97",
+              "name": "Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "json",
+                    "valuesranks_enrichment_remove"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "job_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 5576,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://string-db.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1b27c077-3119-4db2-9c3c-1d798c7751f3",
+    "name": "STRING REST Valuesranks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.\n\n\nContact Support:\n Name: STRING Consortium",
+      "type": "text/plain"
+    }
+  }
+}

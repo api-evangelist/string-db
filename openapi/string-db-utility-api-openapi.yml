@@ -1,0 +1,151 @@
+openapi: 3.2.0
+info:
+  title: STRING REST Utility API
+  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
+
+    '
+  version: '12.0'
+  contact:
+    name: STRING Consortium
+    url: https://string-db.org
+  license:
+    name: Creative Commons Attribution
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+  termsOfService: https://string-db.org/cgi/info?footer_active_subpage=cookies
+servers:
+- url: https://string-db.org
+  description: STRING Production Server
+security: []
+tags:
+- name: utility
+  description: Utility endpoints (version, links, API key)
+paths:
+  /api/{format}/version:
+    get:
+      operationId: getVersion
+      summary: Version
+      description: Return the current STRING database version number and stable address URL.
+      tags:
+      - utility
+      parameters:
+      - $ref: '#/components/parameters/formatVersion'
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Current STRING database version
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionInfo'
+  /api/json/get_api_key:
+    post:
+      operationId: getApiKey
+      summary: Get API Key
+      description: 'Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.
+
+        '
+      tags:
+      - utility
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - caller_identity
+              properties:
+                caller_identity:
+                  type: string
+                  description: Unique identifier for your application or organization
+                  example: my_lab_pipeline
+      responses:
+        '200':
+          description: API key for Values/Ranks enrichment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
+  parameters:
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
+    formatVersion:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - json
+        - xml
+        example: json
+  schemas:
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    VersionInfo:
+      type: object
+      description: Current STRING database version
+      properties:
+        string_version:
+          type: string
+          description: STRING database version number
+          example: '12.0'
+        stable_address:
+          type: string
+          format: uri
+          description: Stable URL for this version of STRING
+          example: https://version-12-0.string-db.org
+    ApiKey:
+      type: object
+      description: API key for Values/Ranks enrichment endpoints
+      properties:
+        api_key:
+          type: string
+          description: The API key to use in subsequent Values/Ranks requests
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: 'API key required only for Values/Ranks Enrichment endpoints. Obtain via POST /api/json/get_api_key. All other endpoints are publicly accessible without authentication.
+
+        '
+externalDocs:
+  description: STRING API Documentation
+  url: https://string-db.org/help/api/

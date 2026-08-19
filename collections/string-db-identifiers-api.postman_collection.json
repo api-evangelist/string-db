@@ -1,0 +1,485 @@
+{
+  "item": [
+    {
+      "id": "0c6e29cc-9a49-4403-824a-971fd6594304",
+      "name": "identifiers",
+      "description": {
+        "content": "Map protein names and synonyms to STRING identifiers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7d0e463d-8012-490d-a02d-0d99189f2efb",
+          "name": "Get STRING IDs",
+          "request": {
+            "name": "Get STRING IDs",
+            "description": {
+              "content": "Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. Use the returned STRING IDs in subsequent API calls for best performance.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "get_string_ids"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Protein identifiers to map (names, synonyms, UniProt IDs). Separate multiple identifiers with URL-encoded newline (%0d) for GET requests, or actual newline/carriage-return for POST requests.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1",
+                  "description": "Maximum number of matches to return per input identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "echo_query",
+                  "value": "0",
+                  "description": "If 1, include the original query identifier in the output"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>",
+                  "description": "A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3900a484-0eb2-498e-a4c6-c98e8c0ce455",
+              "name": "Mapped STRING identifiers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "get_string_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "TP53%0dEGFR%0dBRCA1"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1"
+                    },
+                    {
+                      "key": "echo_query",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"queryIndex\": 7560,\n    \"stringId\": \"9606.ENSP00000269305\",\n    \"ncbiTaxonId\": 9606,\n    \"taxonName\": \"Homo sapiens\",\n    \"preferredName\": \"TP53\",\n    \"annotation\": \"string\"\n  },\n  {\n    \"queryIndex\": 4515,\n    \"stringId\": \"9606.ENSP00000269305\",\n    \"ncbiTaxonId\": 9606,\n    \"taxonName\": \"Homo sapiens\",\n    \"preferredName\": \"TP53\",\n    \"annotation\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9386fa37-ca66-41ba-93bf-e3b11eac3854",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "get_string_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifiers",
+                      "value": "TP53%0dEGFR%0dBRCA1"
+                    },
+                    {
+                      "key": "species",
+                      "value": "9606"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1"
+                    },
+                    {
+                      "key": "echo_query",
+                      "value": "0"
+                    },
+                    {
+                      "key": "caller_identity",
+                      "value": "my_bioinformatics_pipeline"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9144,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4babd268-7b6e-4769-b168-06d2556a682b",
+          "name": "Get STRING IDs (POST)",
+          "request": {
+            "name": "Get STRING IDs (POST)",
+            "description": {
+              "content": "Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. POST is recommended for queries with many identifiers.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":format",
+                "get_string_ids"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "format",
+                  "description": "(Required) Output format"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "identifiers",
+                  "value": "<string>",
+                  "description": "(Required) Newline-separated protein identifiers"
+                },
+                {
+                  "disabled": false,
+                  "key": "species",
+                  "value": "<integer>",
+                  "description": "NCBI taxon ID (e.g. 9606 for human)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "echo_query",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "caller_identity",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e196a08f-23ac-42fe-92ce-a463cdbbdef7",
+              "name": "Mapped STRING identifiers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "get_string_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Newline-separated protein identifiers",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "NCBI taxon ID (e.g. 9606 for human)",
+                        "type": "text/plain"
+                      },
+                      "key": "species",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "limit",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "echo_query",
+                      "value": "0"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"queryIndex\": 7560,\n    \"stringId\": \"9606.ENSP00000269305\",\n    \"ncbiTaxonId\": 9606,\n    \"taxonName\": \"Homo sapiens\",\n    \"preferredName\": \"TP53\",\n    \"annotation\": \"string\"\n  },\n  {\n    \"queryIndex\": 4515,\n    \"stringId\": \"9606.ENSP00000269305\",\n    \"ncbiTaxonId\": 9606,\n    \"taxonName\": \"Homo sapiens\",\n    \"preferredName\": \"TP53\",\n    \"annotation\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6204eec-0086-4b05-b5c7-10e0b6c66812",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":format",
+                    "get_string_ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "format",
+                      "description": "(Required) Output format"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Newline-separated protein identifiers",
+                        "type": "text/plain"
+                      },
+                      "key": "identifiers",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "NCBI taxon ID (e.g. 9606 for human)",
+                        "type": "text/plain"
+                      },
+                      "key": "species",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "limit",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "echo_query",
+                      "value": "0"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "caller_identity",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 9144,\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://string-db.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ea2562a6-83a5-43a3-a42e-2330995a624a",
+    "name": "STRING REST Identifiers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.\n\n\nContact Support:\n Name: STRING Consortium",
+      "type": "text/plain"
+    }
+  }
+}

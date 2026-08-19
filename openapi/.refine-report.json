@@ -1,0 +1,35 @@
+{
+  "provider": "string-db",
+  "sources": [
+    "string-db-annotation-api-openapi.yml",
+    "string-db-enrichment-api-openapi.yml",
+    "string-db-homology-api-openapi.yml",
+    "string-db-identifiers-api-openapi.yml",
+    "string-db-network-api-openapi.yml",
+    "string-db-utility-api-openapi.yml",
+    "string-db-valuesranks-api-openapi.yml"
+  ],
+  "outputs": [
+    "string-db-annotation-api-openapi.yml",
+    "string-db-enrichment-api-openapi.yml",
+    "string-db-homology-api-openapi.yml",
+    "string-db-identifiers-api-openapi.yml",
+    "string-db-network-api-openapi.yml",
+    "string-db-utility-api-openapi.yml",
+    "string-db-valuesranks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "string-db-annotation-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "string-db-enrichment-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "string-db-homology-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "string-db-identifiers-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "string-db-network-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "string-db-utility-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "string-db-valuesranks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

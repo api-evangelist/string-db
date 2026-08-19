@@ -1,0 +1,275 @@
+openapi: 3.2.0
+info:
+  title: STRING REST Annotation API
+  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
+
+    '
+  version: '12.0'
+  contact:
+    name: STRING Consortium
+    url: https://string-db.org
+  license:
+    name: Creative Commons Attribution
+    url: https://string-db.org/cgi/access?footer_active_subpage=licensing
+  termsOfService: https://string-db.org/cgi/info?footer_active_subpage=cookies
+servers:
+- url: https://string-db.org
+  description: STRING Production Server
+security: []
+tags:
+- name: annotation
+  description: Functional annotations and term lookup
+paths:
+  /api/{format}/functional_annotation:
+    get:
+      operationId: getFunctionalAnnotation
+      summary: Functional Annotation
+      description: 'Retrieve all functional annotations associated with input proteins. Includes GO terms, KEGG pathways, Pfam/InterPro/SMART domains, tissue expression (COMPARTMENTS), and disease associations.
+
+        '
+      tags:
+      - annotation
+      parameters:
+      - $ref: '#/components/parameters/format'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers, newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - name: allow_pubmed
+        in: query
+        required: false
+        description: Include PubMed text mining annotations (1=include)
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          default: 0
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Functional annotations for the proteins
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FunctionalAnnotation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/{format}/functional_terms:
+    get:
+      operationId: getFunctionalTerms
+      summary: Functional Terms
+      description: 'Retrieve proteins and details associated with specific functional terms (GO terms, KEGG pathways, Reactome pathways, Pfam domains, etc.).
+
+        '
+      tags:
+      - annotation
+      parameters:
+      - $ref: '#/components/parameters/format'
+      - name: identifier
+        in: query
+        required: true
+        description: Functional term identifier (e.g. GO:0008150, hsa00010, PF00069)
+        schema:
+          type: string
+          example: GO:0008150
+      - name: category
+        in: query
+        required: false
+        description: Term category to restrict search
+        schema:
+          type: string
+          enum:
+          - Process
+          - Function
+          - Component
+          - Keyword
+          - KEGG
+          - RCTM
+          - Pfam
+          - InterPro
+          - SMART
+          - NetworkNeighborAL
+          - COMPARTMENTS
+          - Tissue
+          - Disease
+      - $ref: '#/components/parameters/species'
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Proteins and details associated with the functional term
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FunctionalTermResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/{format}/geneset_description:
+    get:
+      operationId: getGenesetDescription
+      summary: Gene Set Description
+      description: 'Retrieve auto-generated textual descriptions for a set of proteins, summarizing the most relevant functional themes in the gene set.
+
+        '
+      tags:
+      - annotation
+      parameters:
+      - $ref: '#/components/parameters/format'
+      - name: identifiers
+        in: query
+        required: true
+        description: Protein identifiers, newline-separated (%0d in URL)
+        schema:
+          type: string
+      - $ref: '#/components/parameters/species'
+      - $ref: '#/components/parameters/caller_identity'
+      responses:
+        '200':
+          description: Textual descriptions for the gene set
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TsvResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GenesetDescription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
+  parameters:
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
+  schemas:
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    FunctionalAnnotation:
+      type: object
+      description: Functional annotation for a protein
+      properties:
+        stringId:
+          type: string
+          description: STRING protein identifier
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID
+        taxonName:
+          type: string
+          description: Scientific name of the organism
+        preferredName:
+          type: string
+          description: Preferred gene/protein name
+        category:
+          type: string
+          description: Annotation category
+        term:
+          type: string
+          description: Term identifier
+        description:
+          type: string
+          description: Human-readable term description
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+    GenesetDescription:
+      type: object
+      description: Auto-generated description for a protein gene set
+      properties:
+        description:
+          type: string
+          description: Auto-generated functional description of the gene set
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID
+    FunctionalTermResult:
+      type: object
+      description: Proteins associated with a specific functional term
+      properties:
+        category:
+          type: string
+          description: Annotation category
+        term:
+          type: string
+          description: Term identifier
+        description:
+          type: string
+          description: Human-readable term description
+        preferredName:
+          type: string
+          description: Protein preferred name
+        stringId:
+          type: string
+          description: STRING identifier for the protein
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: 'API key required only for Values/Ranks Enrichment endpoints. Obtain via POST /api/json/get_api_key. All other endpoints are publicly accessible without authentication.
+
+        '
+externalDocs:
+  description: STRING API Documentation
+  url: https://string-db.org/help/api/
