@@ -35,6 +35,8 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
+  - Annotation
+  tags_raw:
   - annotation
   properties:
   - type: OpenAPI
@@ -47,6 +49,8 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
+  - Enrichment
+  tags_raw:
   - enrichment
   properties:
   - type: OpenAPI
@@ -59,6 +63,8 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
+  - Homology
+  tags_raw:
   - homology
   properties:
   - type: OpenAPI
@@ -71,6 +77,8 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
+  - Identifiers
+  tags_raw:
   - identifiers
   properties:
   - type: OpenAPI
@@ -83,6 +91,8 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
+  - Network
+  tags_raw:
   - network
   properties:
   - type: OpenAPI
@@ -95,6 +105,8 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
+  - Utility
+  tags_raw:
   - utility
   properties:
   - type: OpenAPI
