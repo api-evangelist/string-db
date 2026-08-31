@@ -47,7 +47,7 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
-  - Annotation
+  - annotation
   tags_raw:
   - annotation
   properties:
@@ -61,7 +61,7 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
-  - Enrichment
+  - enrichment
   tags_raw:
   - enrichment
   properties:
@@ -75,7 +75,7 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
-  - Homology
+  - homology
   tags_raw:
   - homology
   properties:
