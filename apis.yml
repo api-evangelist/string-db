@@ -138,6 +138,8 @@ apis:
   - type: Documentation
     url: https://string-db.org/help/api/
 common:
+  - type: Website
+    url: https://www.string-db.org/
   - type: DomainSecurity
     url: security/string-db-domain-security.yml
   - type: TermsOfService
