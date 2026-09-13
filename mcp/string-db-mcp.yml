@@ -1,0 +1,53 @@
+generated: '2026-09-11'
+method: probed
+source: https://mcp.string-db.org/mcp
+status: published
+server:
+  name: string-db
+  transport: http
+  url: https://mcp.string-db.org/mcp
+deployment:
+  mode: remote
+  endpoint: https://mcp.string-db.org/mcp
+  verified: probed
+  probe: live
+  checked: '2026-09-11'
+  source: docs-check 2026-09-11 (endpoint found in the provider's own documentation, then probed)
+tools_count: 17
+tools:
+- name: string_resolve_proteins
+  description: ''
+- name: string_interactions_query_set
+  description: ''
+- name: string_all_interaction_partners
+  description: ''
+- name: string_visual_network
+  description: ''
+- name: string_network_clustering
+  description: ''
+- name: string_network_link
+  description: ''
+- name: string_homology
+  description: ''
+- name: string_interaction_evidence
+  description: ''
+- name: string_enrichment
+  description: ''
+- name: string_functional_annotation
+  description: ''
+- name: string_enrichment_image_url
+  description: ''
+- name: string_ppi_enrichment
+  description: ''
+- name: string_proteins_for_term
+  description: ''
+- name: string_sequence_search
+  description: ''
+- name: string_query_species
+  description: ''
+- name: string_create_file
+  description: ''
+- name: string_help
+  description: ''
+tools_source: live tools/list via initialize handshake, 2026-09-11 (signals/audit_mcp_authorship.py --probe)
+authorship: provider
