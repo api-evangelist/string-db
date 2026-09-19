@@ -103,7 +103,7 @@ apis:
   humanURL: https://string-db.org/help/api/
   baseURL: https://string-db.org
   tags:
-  - Network
+  - Networks
   tags_raw:
   - network
   properties:
