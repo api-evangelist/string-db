@@ -1,13 +1,7 @@
 {
   "provider": "string-db",
   "sources": [
-    "string-db-annotation-api-openapi.yml",
-    "string-db-enrichment-api-openapi.yml",
-    "string-db-homology-api-openapi.yml",
-    "string-db-identifiers-api-openapi.yml",
-    "string-db-network-api-openapi.yml",
-    "string-db-utility-api-openapi.yml",
-    "string-db-valuesranks-api-openapi.yml"
+    "_original/openapi.yml"
   ],
   "outputs": [
     "string-db-annotation-api-openapi.yml",
@@ -22,14 +16,17 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "string-db-annotation-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "string-db-enrichment-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "string-db-homology-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "string-db-identifiers-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "string-db-network-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "string-db-utility-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "string-db-valuesranks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "string-db-annotation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "string-db-enrichment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "string-db-homology-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "string-db-identifiers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "string-db-network-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "string-db-utility-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "string-db-valuesranks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

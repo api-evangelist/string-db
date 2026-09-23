@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: STRING REST Network API
-  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
-
-    '
+  description: STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
   version: '12.0'
   contact:
     name: STRING Consortium
@@ -17,18 +15,16 @@ servers:
   description: STRING Production Server
 security: []
 tags:
-- name: network
+- name: Network
   description: Retrieve protein-protein interaction networks
 paths:
   /api/{format}/network:
     get:
       operationId: getNetwork
       summary: Network Image or Interactions
-      description: 'Retrieve a protein interaction network as an image or interaction data. Supports image formats (image, highres_image, svg) and data formats (tsv, json, xml, psi-mi, psi-mi-tab).
-
-        '
+      description: Retrieve a protein interaction network as an image or interaction data. Supports image formats (image, highres_image, svg) and data formats (tsv, json, xml, psi-mi, psi-mi-tab).
       tags:
-      - network
+      - Network
       parameters:
       - $ref: '#/components/parameters/formatFull'
       - name: identifiers
@@ -112,11 +108,9 @@ paths:
     post:
       operationId: getNetworkPost
       summary: Network Image or Interactions (POST)
-      description: 'Retrieve a protein interaction network via POST. Recommended for queries with many identifiers.
-
-        '
+      description: Retrieve a protein interaction network via POST. Recommended for queries with many identifiers.
       tags:
-      - network
+      - Network
       parameters:
       - $ref: '#/components/parameters/formatFull'
       requestBody:
@@ -173,7 +167,7 @@ paths:
       summary: Get Network Link
       description: Generate a stable URL linking to a STRING network viewer for the specified proteins.
       tags:
-      - network
+      - Network
       parameters:
       - $ref: '#/components/parameters/formatLink'
       - name: identifiers
@@ -208,7 +202,7 @@ paths:
       summary: Interaction Partners
       description: Retrieve all STRING interaction partners for a set of input proteins.
       tags:
-      - network
+      - Network
       parameters:
       - $ref: '#/components/parameters/format'
       - name: identifiers
@@ -247,7 +241,7 @@ paths:
       operationId: getInteractionPartnersPost
       summary: Interaction Partners (POST)
       tags:
-      - network
+      - Network
       parameters:
       - $ref: '#/components/parameters/format'
       requestBody:
@@ -289,51 +283,17 @@ paths:
                 items:
                   $ref: '#/components/schemas/Interaction'
 components:
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
   parameters:
-    caller_identity:
-      name: caller_identity
+    species:
+      name: species
       in: query
       required: false
-      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
 
         '
       schema:
-        type: string
-        example: my_bioinformatics_pipeline
-    format:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - tsv-no-header
-        - json
-        - xml
-        example: json
-    network_type:
-      name: network_type
-      in: query
-      required: false
-      description: Type of STRING network to use
-      schema:
-        type: string
-        enum:
-        - functional
-        - physical
-        default: functional
+        type: integer
+        example: 9606
     formatFull:
       name: format
       in: path
@@ -352,16 +312,51 @@ components:
         - highres_image
         - svg
         example: json
-    species:
-      name: species
+    caller_identity:
+      name: caller_identity
       in: query
       required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
 
         '
       schema:
-        type: integer
-        example: 9606
+        type: string
+        example: my_bioinformatics_pipeline
+    network_type:
+      name: network_type
+      in: query
+      required: false
+      description: Type of STRING network to use
+      schema:
+        type: string
+        enum:
+        - functional
+        - physical
+        default: functional
+    formatLink:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - json
+        example: json
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
     required_score:
       name: required_score
       in: query
@@ -374,21 +369,16 @@ components:
         minimum: 0
         maximum: 1000
         default: 400
-    formatLink:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - json
-        example: json
   schemas:
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
     Interaction:
       type: object
       description: Protein-protein interaction with component scores
@@ -454,15 +444,19 @@ components:
           description: Text mining score
           minimum: 0
           maximum: 1
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: STRING REST Annotation API
-  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
-
-    '
+  description: STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
   version: '12.0'
   contact:
     name: STRING Consortium
@@ -17,18 +15,16 @@ servers:
   description: STRING Production Server
 security: []
 tags:
-- name: annotation
+- name: Annotation
   description: Functional annotations and term lookup
 paths:
   /api/{format}/functional_annotation:
     get:
       operationId: getFunctionalAnnotation
       summary: Functional Annotation
-      description: 'Retrieve all functional annotations associated with input proteins. Includes GO terms, KEGG pathways, Pfam/InterPro/SMART domains, tissue expression (COMPARTMENTS), and disease associations.
-
-        '
+      description: Retrieve all functional annotations associated with input proteins. Includes GO terms, KEGG pathways, Pfam/InterPro/SMART domains, tissue expression (COMPARTMENTS), and disease associations.
       tags:
-      - annotation
+      - Annotation
       parameters:
       - $ref: '#/components/parameters/format'
       - name: identifiers
@@ -67,11 +63,9 @@ paths:
     get:
       operationId: getFunctionalTerms
       summary: Functional Terms
-      description: 'Retrieve proteins and details associated with specific functional terms (GO terms, KEGG pathways, Reactome pathways, Pfam domains, etc.).
-
-        '
+      description: Retrieve proteins and details associated with specific functional terms (GO terms, KEGG pathways, Reactome pathways, Pfam domains, etc.).
       tags:
-      - annotation
+      - Annotation
       parameters:
       - $ref: '#/components/parameters/format'
       - name: identifier
@@ -121,11 +115,9 @@ paths:
     get:
       operationId: getGenesetDescription
       summary: Gene Set Description
-      description: 'Retrieve auto-generated textual descriptions for a set of proteins, summarizing the most relevant functional themes in the gene set.
-
-        '
+      description: Retrieve auto-generated textual descriptions for a set of proteins, summarizing the most relevant functional themes in the gene set.
       tags:
-      - annotation
+      - Annotation
       parameters:
       - $ref: '#/components/parameters/format'
       - name: identifiers
@@ -151,17 +143,17 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
   parameters:
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
     caller_identity:
       name: caller_identity
       in: query
@@ -185,17 +177,45 @@ components:
         - json
         - xml
         example: json
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
   schemas:
+    FunctionalTermResult:
+      type: object
+      description: Proteins associated with a specific functional term
+      properties:
+        category:
+          type: string
+          description: Annotation category
+        term:
+          type: string
+          description: Term identifier
+        description:
+          type: string
+          description: Human-readable term description
+        preferredName:
+          type: string
+          description: Protein preferred name
+        stringId:
+          type: string
+          description: STRING identifier for the protein
+    GenesetDescription:
+      type: object
+      description: Auto-generated description for a protein gene set
+      properties:
+        description:
+          type: string
+          description: Auto-generated functional description of the gene set
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
     TsvResponse:
       type: string
       description: Tab-separated values response with header row
@@ -224,44 +244,16 @@ components:
         description:
           type: string
           description: Human-readable term description
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
-    GenesetDescription:
-      type: object
-      description: Auto-generated description for a protein gene set
-      properties:
-        description:
-          type: string
-          description: Auto-generated functional description of the gene set
-        ncbiTaxonId:
-          type: integer
-          description: NCBI taxon ID
-    FunctionalTermResult:
-      type: object
-      description: Proteins associated with a specific functional term
-      properties:
-        category:
-          type: string
-          description: Annotation category
-        term:
-          type: string
-          description: Term identifier
-        description:
-          type: string
-          description: Human-readable term description
-        preferredName:
-          type: string
-          description: Protein preferred name
-        stringId:
-          type: string
-          description: STRING identifier for the protein
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

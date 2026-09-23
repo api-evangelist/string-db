@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: STRING REST Enrichment API
-  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
-
-    '
+  description: STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
   version: '12.0'
   contact:
     name: STRING Consortium
@@ -17,18 +15,16 @@ servers:
   description: STRING Production Server
 security: []
 tags:
-- name: enrichment
+- name: Enrichment
   description: Functional enrichment analysis
 paths:
   /api/{format}/enrichment:
     get:
       operationId: getFunctionalEnrichment
       summary: Functional Enrichment
-      description: 'Perform functional enrichment analysis for a set of proteins. Returns enriched GO terms (biological process, molecular function, cellular component), KEGG pathways, Reactome pathways, Pfam domains, InterPro domains, SMART domains, and tissue/disease annotations.
-
-        '
+      description: Perform functional enrichment analysis for a set of proteins. Returns enriched GO terms (biological process, molecular function, cellular component), KEGG pathways, Reactome pathways, Pfam domains, InterPro domains, SMART domains, and tissue/disease annotations.
       tags:
-      - enrichment
+      - Enrichment
       parameters:
       - $ref: '#/components/parameters/format'
       - name: identifiers
@@ -73,7 +69,7 @@ paths:
       operationId: getFunctionalEnrichmentPost
       summary: Functional Enrichment (POST)
       tags:
-      - enrichment
+      - Enrichment
       parameters:
       - $ref: '#/components/parameters/format'
       requestBody:
@@ -116,7 +112,7 @@ paths:
       summary: Enrichment Figure
       description: Generate a visual figure (image) of enrichment analysis results for a protein set.
       tags:
-      - enrichment
+      - Enrichment
       parameters:
       - $ref: '#/components/parameters/formatImage'
       - name: identifiers
@@ -144,11 +140,9 @@ paths:
     get:
       operationId: getPpiEnrichment
       summary: PPI Enrichment
-      description: 'Test whether the interactions in a set of proteins are more significant than expected by random chance given the size and connectivity of the proteome. Returns an observed interaction count, expected count, p-value, and average interaction score.
-
-        '
+      description: Test whether the interactions in a set of proteins are more significant than expected by random chance given the size and connectivity of the proteome. Returns an observed interaction count, expected count, p-value, and average interaction score.
       tags:
-      - enrichment
+      - Enrichment
       parameters:
       - $ref: '#/components/parameters/formatPpi'
       - name: identifiers
@@ -175,6 +169,16 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   parameters:
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
     formatPpi:
       name: format
       in: path
@@ -197,6 +201,29 @@ components:
       schema:
         type: string
         example: my_bioinformatics_pipeline
+    network_type:
+      name: network_type
+      in: query
+      required: false
+      description: Type of STRING network to use
+      schema:
+        type: string
+        enum:
+        - functional
+        - physical
+        default: functional
+    formatImage:
+      name: format
+      in: path
+      required: true
+      description: Image format
+      schema:
+        type: string
+        enum:
+        - image
+        - highres_image
+        - svg
+        example: image
     format:
       name: format
       in: path
@@ -210,27 +237,6 @@ components:
         - json
         - xml
         example: json
-    network_type:
-      name: network_type
-      in: query
-      required: false
-      description: Type of STRING network to use
-      schema:
-        type: string
-        enum:
-        - functional
-        - physical
-        default: functional
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
     required_score:
       name: required_score
       in: query
@@ -243,29 +249,16 @@ components:
         minimum: 0
         maximum: 1000
         default: 400
-    formatImage:
-      name: format
-      in: path
-      required: true
-      description: Image format
-      schema:
-        type: string
-        enum:
-        - image
-        - highres_image
-        - svg
-        example: image
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
     EnrichmentResult:
       type: object
       description: Functional enrichment result for one term
@@ -310,15 +303,6 @@ components:
     TsvResponse:
       type: string
       description: Tab-separated values response with header row
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
     PpiEnrichment:
       type: object
       description: PPI enrichment statistics for the input protein set
@@ -341,6 +325,16 @@ components:
         p_value:
           type: number
           description: P-value for interaction enrichment
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

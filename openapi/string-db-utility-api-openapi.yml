@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: STRING REST Utility API
-  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
-
-    '
+  description: STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
   version: '12.0'
   contact:
     name: STRING Consortium
@@ -17,7 +15,7 @@ servers:
   description: STRING Production Server
 security: []
 tags:
-- name: utility
+- name: Utility
   description: Utility endpoints (version, links, API key)
 paths:
   /api/{format}/version:
@@ -26,7 +24,7 @@ paths:
       summary: Version
       description: Return the current STRING database version number and stable address URL.
       tags:
-      - utility
+      - Utility
       parameters:
       - $ref: '#/components/parameters/formatVersion'
       - $ref: '#/components/parameters/caller_identity'
@@ -44,11 +42,9 @@ paths:
     post:
       operationId: getApiKey
       summary: Get API Key
-      description: 'Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.
-
-        '
+      description: Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.
       tags:
-      - utility
+      - Utility
       requestBody:
         required: true
         content:
@@ -72,16 +68,6 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
   parameters:
     caller_identity:
       name: caller_identity
@@ -106,9 +92,15 @@ components:
         - xml
         example: json
   schemas:
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
     VersionInfo:
       type: object
       description: Current STRING database version
@@ -122,6 +114,9 @@ components:
           format: uri
           description: Stable URL for this version of STRING
           example: https://version-12-0.string-db.org
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
     ApiKey:
       type: object
       description: API key for Values/Ranks enrichment endpoints
@@ -129,15 +124,16 @@ components:
         api_key:
           type: string
           description: The API key to use in subsequent Values/Ranks requests
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

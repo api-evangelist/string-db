@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: STRING REST Valuesranks API
-  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
-
-    '
+  description: STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
   version: '12.0'
   contact:
     name: STRING Consortium
@@ -24,9 +22,7 @@ paths:
     post:
       operationId: getApiKey
       summary: Get API Key
-      description: 'Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.
-
-        '
+      description: Obtain an API key required for the Values/Ranks Enrichment endpoints. The key is tied to the caller_identity you provide.
       tags:
       - valuesranks
       requestBody:
@@ -55,9 +51,7 @@ paths:
     post:
       operationId: submitValuesRanksEnrichment
       summary: Submit Values/Ranks Enrichment Job
-      description: 'Submit a GSEA-like enrichment analysis on a ranked list of proteins with associated numeric values (e.g. fold-change, log p-value). Accepts up to 1000 concurrent jobs per API key. Returns a job_id to poll with the status endpoint.
-
-        '
+      description: Submit a GSEA-like enrichment analysis on a ranked list of proteins with associated numeric values (e.g. fold-change, log p-value). Accepts up to 1000 concurrent jobs per API key. Returns a job_id to poll with the status endpoint.
       tags:
       - valuesranks
       requestBody:
@@ -107,9 +101,7 @@ paths:
     get:
       operationId: getValuesRanksEnrichmentStatus
       summary: Check Values/Ranks Enrichment Status
-      description: 'Check the status of a submitted Values/Ranks enrichment job. When status is "done", the response also includes the enrichment results.
-
-        '
+      description: Check the status of a submitted Values/Ranks enrichment job. When status is "done", the response also includes the enrichment results.
       tags:
       - valuesranks
       parameters:
@@ -172,6 +164,35 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+    JobStatus:
+      type: object
+      description: Job status and results
+      properties:
+        status:
+          type: string
+          enum:
+          - queued
+          - running
+          - done
+          - error
+          description: Current job status
+        job_id:
+          type: string
+          description: Job identifier
+        results:
+          type: array
+          description: Enrichment results (only present when status is "done")
+          items:
+            $ref: '#/components/schemas/EnrichmentResult'
     EnrichmentResult:
       type: object
       description: Functional enrichment result for one term
@@ -213,33 +234,6 @@ components:
           type: string
           description: Human-readable name of the functional term
           example: apoptotic process
-    JobStatus:
-      type: object
-      description: Job status and results
-      properties:
-        status:
-          type: string
-          enum:
-          - queued
-          - running
-          - done
-          - error
-          description: Current job status
-        job_id:
-          type: string
-          description: Job identifier
-        results:
-          type: array
-          description: Enrichment results (only present when status is "done")
-          items:
-            $ref: '#/components/schemas/EnrichmentResult'
-    ApiKey:
-      type: object
-      description: API key for Values/Ranks enrichment endpoints
-      properties:
-        api_key:
-          type: string
-          description: The API key to use in subsequent Values/Ranks requests
     JobSubmission:
       type: object
       description: Job submission response
@@ -247,15 +241,13 @@ components:
         job_id:
           type: string
           description: Unique job identifier for polling
-    Error:
+    ApiKey:
       type: object
+      description: API key for Values/Ranks enrichment endpoints
       properties:
-        status:
-          type: integer
-        error:
+        api_key:
           type: string
-        message:
-          type: string
+          description: The API key to use in subsequent Values/Ranks requests
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: STRING REST Homology API
-  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
-
-    '
+  description: STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
   version: '12.0'
   contact:
     name: STRING Consortium
@@ -24,9 +22,7 @@ paths:
     get:
       operationId: getHomology
       summary: Homology
-      description: 'Return Smith-Waterman bit scores between all pairs of proteins in the input set.
-
-        '
+      description: Return Smith-Waterman bit scores between all pairs of proteins in the input set.
       tags:
       - homology
       parameters:
@@ -57,9 +53,7 @@ paths:
     get:
       operationId: getHomologyBest
       summary: Best Homology
-      description: 'Return the best cross-species homology hits for input proteins. Useful for finding orthologs across species.
-
-        '
+      description: Return the best cross-species homology hits for input proteins. Useful for finding orthologs across species.
       tags:
       - homology
       parameters:
@@ -94,17 +88,17 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
   parameters:
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
     caller_identity:
       name: caller_identity
       in: query
@@ -128,17 +122,16 @@ components:
         - json
         - xml
         example: json
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
     HomologyResult:
       type: object
       description: Smith-Waterman homology score between two proteins
@@ -155,9 +148,6 @@ components:
         identity:
           type: number
           description: Sequence identity (0-100%)
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
     HomologyBestResult:
       type: object
       description: Best cross-species homology hit
@@ -180,15 +170,19 @@ components:
         identity:
           type: number
           description: Sequence identity percentage
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

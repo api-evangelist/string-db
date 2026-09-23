@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: STRING REST Identifiers API
-  description: 'STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
-
-    '
+  description: STRING is a protein-protein interaction network database providing scored associations between proteins across thousands of organisms. The REST API enables programmatic access to interaction scores, network visualizations, functional enrichment analysis, homology data, and protein annotations. STRING integrates data from genomic context, co-expression, text mining, biochemical and genetic experiments, and curated databases.
   version: '12.0'
   contact:
     name: STRING Consortium
@@ -17,18 +15,16 @@ servers:
   description: STRING Production Server
 security: []
 tags:
-- name: identifiers
+- name: Identifiers
   description: Map protein names and synonyms to STRING identifiers
 paths:
   /api/{format}/get_string_ids:
     get:
       operationId: getStringIds
       summary: Get STRING IDs
-      description: 'Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. Use the returned STRING IDs in subsequent API calls for best performance.
-
-        '
+      description: Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. Use the returned STRING IDs in subsequent API calls for best performance.
       tags:
-      - identifiers
+      - Identifiers
       parameters:
       - $ref: '#/components/parameters/format'
       - name: identifiers
@@ -80,11 +76,9 @@ paths:
     post:
       operationId: getStringIdsPost
       summary: Get STRING IDs (POST)
-      description: 'Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. POST is recommended for queries with many identifiers.
-
-        '
+      description: Map gene names, protein synonyms, or UniProt IDs to STRING identifiers. POST is recommended for queries with many identifiers.
       tags:
-      - identifiers
+      - Identifiers
       parameters:
       - $ref: '#/components/parameters/format'
       requestBody:
@@ -128,17 +122,17 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
   parameters:
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
     caller_identity:
       name: caller_identity
       in: query
@@ -162,20 +156,7 @@ components:
         - json
         - xml
         example: json
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
   schemas:
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
     Error:
       type: object
       properties:
@@ -185,9 +166,6 @@ components:
           type: string
         message:
           type: string
-    XmlResponse:
-      type: string
-      description: XML-formatted response
     StringIdMapping:
       type: object
       description: Mapping from input identifier to STRING protein ID
@@ -214,6 +192,22 @@ components:
         annotation:
           type: string
           description: Short functional annotation
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    XmlResponse:
+      type: string
+      description: XML-formatted response
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
