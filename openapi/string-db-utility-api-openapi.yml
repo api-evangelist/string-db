@@ -92,15 +92,6 @@ components:
         - xml
         example: json
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
     VersionInfo:
       type: object
       description: Current STRING database version
@@ -124,6 +115,15 @@ components:
         api_key:
           type: string
           description: The API key to use in subsequent Values/Ranks requests
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

@@ -89,16 +89,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   parameters:
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
     caller_identity:
       name: caller_identity
       in: query
@@ -122,16 +112,20 @@ components:
         - json
         - xml
         example: json
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
     HomologyResult:
       type: object
       description: Smith-Waterman homology score between two proteins
@@ -170,9 +164,15 @@ components:
         identity:
           type: number
           description: Sequence identity percentage
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

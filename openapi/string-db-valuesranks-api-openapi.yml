@@ -163,16 +163,23 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
     JobStatus:
       type: object
       description: Job status and results
@@ -193,6 +200,20 @@ components:
           description: Enrichment results (only present when status is "done")
           items:
             $ref: '#/components/schemas/EnrichmentResult'
+    JobSubmission:
+      type: object
+      description: Job submission response
+      properties:
+        job_id:
+          type: string
+          description: Unique job identifier for polling
+    ApiKey:
+      type: object
+      description: API key for Values/Ranks enrichment endpoints
+      properties:
+        api_key:
+          type: string
+          description: The API key to use in subsequent Values/Ranks requests
     EnrichmentResult:
       type: object
       description: Functional enrichment result for one term
@@ -234,36 +255,15 @@ components:
           type: string
           description: Human-readable name of the functional term
           example: apoptotic process
-    JobSubmission:
+    Error:
       type: object
-      description: Job submission response
       properties:
-        job_id:
+        status:
+          type: integer
+        error:
           type: string
-          description: Unique job identifier for polling
-    ApiKey:
-      type: object
-      description: API key for Values/Ranks enrichment endpoints
-      properties:
-        api_key:
+        message:
           type: string
-          description: The API key to use in subsequent Values/Ranks requests
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
-    Unauthorized:
-      description: Invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

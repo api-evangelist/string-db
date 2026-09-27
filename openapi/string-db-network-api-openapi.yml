@@ -284,16 +284,16 @@ paths:
                   $ref: '#/components/schemas/Interaction'
 components:
   parameters:
-    species:
-      name: species
+    caller_identity:
+      name: caller_identity
       in: query
       required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
 
         '
       schema:
-        type: integer
-        example: 9606
+        type: string
+        example: my_bioinformatics_pipeline
     formatFull:
       name: format
       in: path
@@ -312,27 +312,6 @@ components:
         - highres_image
         - svg
         example: json
-    caller_identity:
-      name: caller_identity
-      in: query
-      required: false
-      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
-
-        '
-      schema:
-        type: string
-        example: my_bioinformatics_pipeline
-    network_type:
-      name: network_type
-      in: query
-      required: false
-      description: Type of STRING network to use
-      schema:
-        type: string
-        enum:
-        - functional
-        - physical
-        default: functional
     formatLink:
       name: format
       in: path
@@ -357,6 +336,27 @@ components:
         - json
         - xml
         example: json
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
+    network_type:
+      name: network_type
+      in: query
+      required: false
+      description: Type of STRING network to use
+      schema:
+        type: string
+        enum:
+        - functional
+        - physical
+        default: functional
     required_score:
       name: required_score
       in: query
@@ -370,15 +370,6 @@ components:
         maximum: 1000
         default: 400
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
     Interaction:
       type: object
       description: Protein-protein interaction with component scores
@@ -447,6 +438,15 @@ components:
     TsvResponse:
       type: string
       description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

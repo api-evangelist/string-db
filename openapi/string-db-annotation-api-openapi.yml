@@ -144,16 +144,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   parameters:
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
     caller_identity:
       name: caller_identity
       in: query
@@ -177,26 +167,17 @@ components:
         - json
         - xml
         example: json
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
   schemas:
-    FunctionalTermResult:
-      type: object
-      description: Proteins associated with a specific functional term
-      properties:
-        category:
-          type: string
-          description: Annotation category
-        term:
-          type: string
-          description: Term identifier
-        description:
-          type: string
-          description: Human-readable term description
-        preferredName:
-          type: string
-          description: Protein preferred name
-        stringId:
-          type: string
-          description: STRING identifier for the protein
     GenesetDescription:
       type: object
       description: Auto-generated description for a protein gene set
@@ -207,15 +188,6 @@ components:
         ncbiTaxonId:
           type: integer
           description: NCBI taxon ID
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
     TsvResponse:
       type: string
       description: Tab-separated values response with header row
@@ -244,6 +216,34 @@ components:
         description:
           type: string
           description: Human-readable term description
+    FunctionalTermResult:
+      type: object
+      description: Proteins associated with a specific functional term
+      properties:
+        category:
+          type: string
+          description: Annotation category
+        term:
+          type: string
+          description: Term identifier
+        description:
+          type: string
+          description: Human-readable term description
+        preferredName:
+          type: string
+          description: Protein preferred name
+        stringId:
+          type: string
+          description: STRING identifier for the protein
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

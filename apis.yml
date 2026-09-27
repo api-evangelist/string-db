@@ -45,7 +45,6 @@ apis:
   name: STRING Annotation API
   description: Functional annotations and term lookup
   humanURL: https://string-db.org/help/api/
-  baseURL: https://string-db.org
   tags:
   - Annotation
   tags_raw:
@@ -59,7 +58,6 @@ apis:
   name: STRING Enrichment API
   description: Functional enrichment analysis
   humanURL: https://string-db.org/help/api/
-  baseURL: https://string-db.org
   tags:
   - Enrichment
   tags_raw:
@@ -73,7 +71,6 @@ apis:
   name: STRING Homology API
   description: Protein homology and similarity scores
   humanURL: https://string-db.org/help/api/
-  baseURL: https://string-db.org
   tags:
   - Homology
   tags_raw:
@@ -87,7 +84,6 @@ apis:
   name: STRING Identifiers API
   description: Map protein names and synonyms to STRING identifiers
   humanURL: https://string-db.org/help/api/
-  baseURL: https://string-db.org
   tags:
   - Identifiers
   tags_raw:
@@ -101,7 +97,6 @@ apis:
   name: STRING Network API
   description: Retrieve protein-protein interaction networks
   humanURL: https://string-db.org/help/api/
-  baseURL: https://string-db.org
   tags:
   - Networks
   tags_raw:
@@ -115,7 +110,6 @@ apis:
   name: STRING Utility API
   description: Utility endpoints (version, links, API key)
   humanURL: https://string-db.org/help/api/
-  baseURL: https://string-db.org
   tags:
   - Utility
   tags_raw:
@@ -129,7 +123,6 @@ apis:
   name: STRING Valuesranks API
   description: Values/Ranks GSEA-like enrichment (requires API key)
   humanURL: https://string-db.org/help/api/
-  baseURL: https://string-db.org
   tags:
   - valuesranks
   properties:
