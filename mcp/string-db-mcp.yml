@@ -16,38 +16,72 @@ deployment:
 tools_count: 17
 tools:
 - name: string_resolve_proteins
-  description: ''
+  description: 'Maps one or more protein identifiers to their corresponding STRING metadata, including:
+    gene symbol, description, sequence, domains, species, and internal STRING ID.  This method is useful
+    for translating raw identifiers into readable, anno'
 - name: string_interactions_query_set
-  description: ''
+  description: Retrieves the interactions between the query proteins. Use this method only when you specifically
+    need to list the interactions between all proteins in your query set. If user asks for 'physical'
+    or 'complex' use 'physical' network type.  -
 - name: string_all_interaction_partners
-  description: ''
+  description: Retrieves all interaction partners for one or more proteins from STRING.  This tool returns
+    all known interactions between your query protein(s) and **any other proteins in the STRING database**.  -
+    Use this when asking **“What does TP53 in
 - name: string_visual_network
-  description: ''
+  description: 'Retrieves a URL to a **STRING interaction network image** for one or more proteins.  -
+    For a single protein: includes the protein and its top 10 most likely interactors. - For multiple
+    proteins: includes all known interactions **within the'
 - name: string_network_clustering
-  description: ''
+  description: Performs **network clustering** on a STRING interaction network and returns both a **network
+    image URL** and details about each detected cluster.  Use the same parameters as in the network creation
+    step to ensure consistency. If the network
 - name: string_network_link
-  description: ''
+  description: 'Retrieves a stable URL to an interactive STRING network for one or more proteins.  - For
+    a single protein: includes the protein and its top 10 most likely interactors. - For multiple proteins:
+    includes all known interactions **within the qu'
 - name: string_homology
-  description: ''
+  description: Retrieves pairwise protein similarity scores (Smith–Waterman bit scores) for the query
+    proteins.    - If no target species (`species_b`) is provided, results are intra-species (within the
+    query species).   - To retrieve homologs in other sp
 - name: string_interaction_evidence
-  description: ''
+  description: Retrieves direct links to STRING evidence pages for protein–protein interaction pairs.  Use
+    this tool only when a STRING evidence page/link is needed. To determine whether an interaction is
+    supported, use `string_interactions_query_set`.  I
 - name: string_enrichment
-  description: ''
+  description: This tool retrieves functional enrichment for a set of proteins using STRING.  - If queried
+    with a single protein, the tool expands the query to include the protein’s 10 most likely interactors;
+    enrichment is performed on this set, not the
 - name: string_functional_annotation
-  description: ''
+  description: This tool retrieves curated functional annotations for a set of proteins.  Each input protein
+    is mapped to known biological terms from ontologies, pathway databases, tissues, compartments and
+    domains — such as Gene Ontology (GO), KEGG, and
 - name: string_enrichment_image_url
-  description: ''
+  description: Retrieves the STRING enrichment figure image *URL* for a set of proteins.
 - name: string_ppi_enrichment
-  description: ''
+  description: This tool tests if your network is enriched in protein-protein interactions compared to
+    the background proteome-wide distribution (i.e., if your proteins are more functionally connected
+    than expected by chance).  - The enrichment is assesse
 - name: string_proteins_for_term
-  description: ''
+  description: 'Retrieve proteins annotated with a functional term or descriptive text in a single species.   You
+    can query for tissues, compartments, diseases, processes, pathways, and domains.    IMPORTANT: For
+    cross-species comparisons, run this tool se'
 - name: string_sequence_search
-  description: ''
+  description: Searches the STRING database using **amino acid sequences** to identify matching proteins.  -
+    Accepts a single sequence or multiple sequences in FASTA format. - Returns the most similar STRING
+    protein(s) for the specified species, based on
 - name: string_query_species
-  description: ''
+  description: Search for species or clades available in STRING by free-text query and return their NCBI
+    taxonomy IDs.  - Use this when the user asks which species or clades are present in STRING,   or when
+    you need the correct NCBI taxon ID to pass to ot
 - name: string_create_file
-  description: ''
+  description: Creates a downloadable file for STRING-derived results.  Use this tool when the user explicitly
+    asks to download, save, export, or receive a file containing STRING data, tables, protein lists, enrichment
+    results, networks, etc.  When a resp
 - name: string_help
-  description: ''
+  description: 'Provides explanatory text for STRING features and limitations.  Use this tool when the
+    user question involves:   - What is STRING is or how to use the tool (how_to_use_string, cytoscape)   -
+    functionality not available via MCP tools (e.g. G'
 tools_source: live tools/list via initialize handshake, 2026-09-11 (signals/audit_mcp_authorship.py --probe)
 authorship: provider
+descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
+  --descriptions, 2026-09-28
