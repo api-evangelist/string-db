@@ -68,6 +68,49 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
+  schemas:
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    VersionInfo:
+      type: object
+      description: Current STRING database version
+      properties:
+        string_version:
+          type: string
+          description: STRING database version number
+          example: '12.0'
+        stable_address:
+          type: string
+          format: uri
+          description: Stable URL for this version of STRING
+          example: https://version-12-0.string-db.org
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+    ApiKey:
+      type: object
+      description: API key for Values/Ranks enrichment endpoints
+      properties:
+        api_key:
+          type: string
+          description: The API key to use in subsequent Values/Ranks requests
+  responses:
+    BadRequest:
+      description: Bad request (invalid parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        text/plain:
+          schema:
+            type: string
   parameters:
     caller_identity:
       name: caller_identity
@@ -91,49 +134,6 @@ components:
         - json
         - xml
         example: json
-  schemas:
-    VersionInfo:
-      type: object
-      description: Current STRING database version
-      properties:
-        string_version:
-          type: string
-          description: STRING database version number
-          example: '12.0'
-        stable_address:
-          type: string
-          format: uri
-          description: Stable URL for this version of STRING
-          example: https://version-12-0.string-db.org
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
-    ApiKey:
-      type: object
-      description: API key for Values/Ranks enrichment endpoints
-      properties:
-        api_key:
-          type: string
-          description: The API key to use in subsequent Values/Ranks requests
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
-  responses:
-    BadRequest:
-      description: Bad request (invalid parameters)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-        text/plain:
-          schema:
-            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

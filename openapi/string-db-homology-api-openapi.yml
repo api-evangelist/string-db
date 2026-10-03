@@ -89,16 +89,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   parameters:
-    caller_identity:
-      name: caller_identity
-      in: query
-      required: false
-      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
-
-        '
-      schema:
-        type: string
-        example: my_bioinformatics_pipeline
     format:
       name: format
       in: path
@@ -112,6 +102,16 @@ components:
         - json
         - xml
         example: json
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
     species:
       name: species
       in: query
@@ -123,25 +123,6 @@ components:
         type: integer
         example: 9606
   schemas:
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
-    HomologyResult:
-      type: object
-      description: Smith-Waterman homology score between two proteins
-      properties:
-        stringId_A:
-          type: string
-          description: STRING identifier for protein A
-        stringId_B:
-          type: string
-          description: STRING identifier for protein B
-        bitscore:
-          type: number
-          description: Smith-Waterman bit score
-        identity:
-          type: number
-          description: Sequence identity (0-100%)
     HomologyBestResult:
       type: object
       description: Best cross-species homology hit
@@ -164,6 +145,25 @@ components:
         identity:
           type: number
           description: Sequence identity percentage
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    HomologyResult:
+      type: object
+      description: Smith-Waterman homology score between two proteins
+      properties:
+        stringId_A:
+          type: string
+          description: STRING identifier for protein A
+        stringId_B:
+          type: string
+          description: STRING identifier for protein B
+        bitscore:
+          type: number
+          description: Smith-Waterman bit score
+        identity:
+          type: number
+          description: Sequence identity (0-100%)
     Error:
       type: object
       properties:

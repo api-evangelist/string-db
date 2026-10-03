@@ -122,40 +122,6 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  parameters:
-    caller_identity:
-      name: caller_identity
-      in: query
-      required: false
-      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
-
-        '
-      schema:
-        type: string
-        example: my_bioinformatics_pipeline
-    format:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - tsv-no-header
-        - json
-        - xml
-        example: json
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
   schemas:
     StringIdMapping:
       type: object
@@ -186,9 +152,6 @@ components:
     TsvResponse:
       type: string
       description: Tab-separated values response with header row
-    XmlResponse:
-      type: string
-      description: XML-formatted response
     Error:
       type: object
       properties:
@@ -198,6 +161,43 @@ components:
           type: string
         message:
           type: string
+    XmlResponse:
+      type: string
+      description: XML-formatted response
+  parameters:
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
   responses:
     BadRequest:
       description: Bad request (invalid parameters)
