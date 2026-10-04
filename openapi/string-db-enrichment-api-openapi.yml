@@ -168,88 +168,32 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  parameters:
-    network_type:
-      name: network_type
-      in: query
-      required: false
-      description: Type of STRING network to use
-      schema:
-        type: string
-        enum:
-        - functional
-        - physical
-        default: functional
-    format:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - tsv-no-header
-        - json
-        - xml
-        example: json
-    required_score:
-      name: required_score
-      in: query
-      required: false
-      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
-
-        '
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 400
-    caller_identity:
-      name: caller_identity
-      in: query
-      required: false
-      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
-
-        '
-      schema:
-        type: string
-        example: my_bioinformatics_pipeline
-    formatImage:
-      name: format
-      in: path
-      required: true
-      description: Image format
-      schema:
-        type: string
-        enum:
-        - image
-        - highres_image
-        - svg
-        example: image
-    formatPpi:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - json
-        - xml
-        example: json
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
-      schema:
-        type: integer
-        example: 9606
   schemas:
+    PpiEnrichment:
+      type: object
+      description: PPI enrichment statistics for the input protein set
+      properties:
+        number_of_nodes:
+          type: integer
+          description: Number of proteins in the input set
+        number_of_edges:
+          type: integer
+          description: Observed number of interactions
+        average_node_degree:
+          type: number
+          description: Average number of interaction partners per protein
+        local_clustering_coefficient:
+          type: number
+          description: Average local clustering coefficient
+        expected_number_of_edges:
+          type: number
+          description: Expected number of interactions at random
+        p_value:
+          type: number
+          description: P-value for interaction enrichment
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
     EnrichmentResult:
       type: object
       description: Functional enrichment result for one term
@@ -291,9 +235,6 @@ components:
           type: string
           description: Human-readable name of the functional term
           example: apoptotic process
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
     Error:
       type: object
       properties:
@@ -303,28 +244,87 @@ components:
           type: string
         message:
           type: string
-    PpiEnrichment:
-      type: object
-      description: PPI enrichment statistics for the input protein set
-      properties:
-        number_of_nodes:
-          type: integer
-          description: Number of proteins in the input set
-        number_of_edges:
-          type: integer
-          description: Observed number of interactions
-        average_node_degree:
-          type: number
-          description: Average number of interaction partners per protein
-        local_clustering_coefficient:
-          type: number
-          description: Average local clustering coefficient
-        expected_number_of_edges:
-          type: number
-          description: Expected number of interactions at random
-        p_value:
-          type: number
-          description: P-value for interaction enrichment
+  parameters:
+    caller_identity:
+      name: caller_identity
+      in: query
+      required: false
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
+      schema:
+        type: string
+        example: my_bioinformatics_pipeline
+    formatPpi:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - json
+        - xml
+        example: json
+    required_score:
+      name: required_score
+      in: query
+      required: false
+      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 400
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
+    network_type:
+      name: network_type
+      in: query
+      required: false
+      description: Type of STRING network to use
+      schema:
+        type: string
+        enum:
+        - functional
+        - physical
+        default: functional
+    formatImage:
+      name: format
+      in: path
+      required: true
+      description: Image format
+      schema:
+        type: string
+        enum:
+        - image
+        - highres_image
+        - svg
+        example: image
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

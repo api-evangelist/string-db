@@ -164,6 +164,40 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    JobStatus:
+      type: object
+      description: Job status and results
+      properties:
+        status:
+          type: string
+          enum:
+          - queued
+          - running
+          - done
+          - error
+          description: Current job status
+        job_id:
+          type: string
+          description: Job identifier
+        results:
+          type: array
+          description: Enrichment results (only present when status is "done")
+          items:
+            $ref: '#/components/schemas/EnrichmentResult'
+    JobSubmission:
+      type: object
+      description: Job submission response
+      properties:
+        job_id:
+          type: string
+          description: Unique job identifier for polling
+    ApiKey:
+      type: object
+      description: API key for Values/Ranks enrichment endpoints
+      properties:
+        api_key:
+          type: string
+          description: The API key to use in subsequent Values/Ranks requests
     EnrichmentResult:
       type: object
       description: Functional enrichment result for one term
@@ -205,26 +239,6 @@ components:
           type: string
           description: Human-readable name of the functional term
           example: apoptotic process
-    JobStatus:
-      type: object
-      description: Job status and results
-      properties:
-        status:
-          type: string
-          enum:
-          - queued
-          - running
-          - done
-          - error
-          description: Current job status
-        job_id:
-          type: string
-          description: Job identifier
-        results:
-          type: array
-          description: Enrichment results (only present when status is "done")
-          items:
-            $ref: '#/components/schemas/EnrichmentResult'
     Error:
       type: object
       properties:
@@ -234,21 +248,13 @@ components:
           type: string
         message:
           type: string
-    ApiKey:
-      type: object
-      description: API key for Values/Ranks enrichment endpoints
-      properties:
-        api_key:
-          type: string
-          description: The API key to use in subsequent Values/Ranks requests
-    JobSubmission:
-      type: object
-      description: Job submission response
-      properties:
-        job_id:
-          type: string
-          description: Unique job identifier for polling
   responses:
+    Unauthorized:
+      description: Invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request (invalid parameters)
       content:
@@ -258,12 +264,6 @@ components:
         text/plain:
           schema:
             type: string
-    Unauthorized:
-      description: Invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

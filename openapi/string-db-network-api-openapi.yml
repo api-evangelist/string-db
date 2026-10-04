@@ -284,17 +284,38 @@ paths:
                   $ref: '#/components/schemas/Interaction'
 components:
   parameters:
-    network_type:
-      name: network_type
+    caller_identity:
+      name: caller_identity
       in: query
       required: false
-      description: Type of STRING network to use
+      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
+
+        '
       schema:
         type: string
-        enum:
-        - functional
-        - physical
-        default: functional
+        example: my_bioinformatics_pipeline
+    required_score:
+      name: required_score
+      in: query
+      required: false
+      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 400
+    species:
+      name: species
+      in: query
+      required: false
+      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
+
+        '
+      schema:
+        type: integer
+        example: 9606
     format:
       name: format
       in: path
@@ -307,17 +328,6 @@ components:
         - tsv-no-header
         - json
         - xml
-        example: json
-    formatLink:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - json
         example: json
     formatFull:
       name: format
@@ -337,42 +347,29 @@ components:
         - highres_image
         - svg
         example: json
-    required_score:
-      name: required_score
+    network_type:
+      name: network_type
       in: query
       required: false
-      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
-
-        '
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 400
-    caller_identity:
-      name: caller_identity
-      in: query
-      required: false
-      description: 'A string identifying your application or organization. Strongly recommended; helps STRING admins contact you if there are issues.
-
-        '
+      description: Type of STRING network to use
       schema:
         type: string
-        example: my_bioinformatics_pipeline
-    species:
-      name: species
-      in: query
-      required: false
-      description: 'NCBI taxon ID to restrict results to a specific organism. Common values: 9606 (human), 10090 (mouse), 10116 (rat), 7227 (D. melanogaster), 6239 (C. elegans), 4932 (S. cerevisiae), 3702 (A. thaliana), 7955 (zebrafish).
-
-        '
+        enum:
+        - functional
+        - physical
+        default: functional
+    formatLink:
+      name: format
+      in: path
+      required: true
+      description: Output format
       schema:
-        type: integer
-        example: 9606
+        type: string
+        enum:
+        - tsv
+        - json
+        example: json
   schemas:
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
     Interaction:
       type: object
       description: Protein-protein interaction with component scores
@@ -438,6 +435,9 @@ components:
           description: Text mining score
           minimum: 0
           maximum: 1
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
     Error:
       type: object
       properties:

@@ -89,19 +89,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   parameters:
-    format:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - tsv-no-header
-        - json
-        - xml
-        example: json
     caller_identity:
       name: caller_identity
       in: query
@@ -122,7 +109,23 @@ components:
       schema:
         type: integer
         example: 9606
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
   schemas:
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
     HomologyBestResult:
       type: object
       description: Best cross-species homology hit
@@ -145,9 +148,6 @@ components:
         identity:
           type: number
           description: Sequence identity percentage
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
     HomologyResult:
       type: object
       description: Smith-Waterman homology score between two proteins
