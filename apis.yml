@@ -131,6 +131,8 @@ apis:
   - type: Documentation
     url: https://string-db.org/help/api/
 common:
+  - url: https://www.string-db.org/blog/
+    type: Blog
   - type: Website
     url: https://www.string-db.org/
   - type: DomainSecurity
@@ -145,7 +147,7 @@ common:
     url: https://string-db.org/help/api/
   - type: Downloads
     url: https://string-db.org/cgi/download
-modified: 2026-06-13
+modified: '2026-10-06'
 maintainers:
   - FN: STRING Consortium
     url: https://string-db.org
