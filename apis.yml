@@ -131,6 +131,12 @@ apis:
   - type: Documentation
     url: https://string-db.org/help/api/
 common:
+  - type: Plans
+    url: plans/plans.yml
+  - type: RateLimits
+    url: rate-limits/rate-limits.yml
+  - type: FinOps
+    url: finops/finops.yml
   - url: https://www.string-db.org/blog/
     type: Blog
   - type: Website
