@@ -126,6 +126,15 @@ components:
     TsvResponse:
       type: string
       description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
     HomologyBestResult:
       type: object
       description: Best cross-species homology hit
@@ -164,15 +173,6 @@ components:
         identity:
           type: number
           description: Sequence identity (0-100%)
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

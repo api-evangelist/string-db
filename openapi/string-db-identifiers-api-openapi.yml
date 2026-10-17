@@ -157,9 +157,21 @@ components:
         - xml
         example: json
   schemas:
+    XmlResponse:
+      type: string
+      description: XML-formatted response
     TsvResponse:
       type: string
       description: Tab-separated values response with header row
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
     StringIdMapping:
       type: object
       description: Mapping from input identifier to STRING protein ID
@@ -186,18 +198,6 @@ components:
         annotation:
           type: string
           description: Short functional annotation
-    XmlResponse:
-      type: string
-      description: XML-formatted response
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

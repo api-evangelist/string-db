@@ -191,9 +191,6 @@ components:
         p_value:
           type: number
           description: P-value for interaction enrichment
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
     EnrichmentResult:
       type: object
       description: Functional enrichment result for one term
@@ -235,6 +232,9 @@ components:
           type: string
           description: Human-readable name of the functional term
           example: apoptotic process
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
     Error:
       type: object
       properties:
@@ -255,30 +255,6 @@ components:
       schema:
         type: string
         example: my_bioinformatics_pipeline
-    formatPpi:
-      name: format
-      in: path
-      required: true
-      description: Output format
-      schema:
-        type: string
-        enum:
-        - tsv
-        - json
-        - xml
-        example: json
-    required_score:
-      name: required_score
-      in: query
-      required: false
-      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
-
-        '
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 1000
-        default: 400
     species:
       name: species
       in: query
@@ -289,7 +265,7 @@ components:
       schema:
         type: integer
         example: 9606
-    format:
+    formatPpi:
       name: format
       in: path
       required: true
@@ -298,7 +274,6 @@ components:
         type: string
         enum:
         - tsv
-        - tsv-no-header
         - json
         - xml
         example: json
@@ -313,6 +288,19 @@ components:
         - functional
         - physical
         default: functional
+    format:
+      name: format
+      in: path
+      required: true
+      description: Output format
+      schema:
+        type: string
+        enum:
+        - tsv
+        - tsv-no-header
+        - json
+        - xml
+        example: json
     formatImage:
       name: format
       in: path
@@ -325,6 +313,18 @@ components:
         - highres_image
         - svg
         example: image
+    required_score:
+      name: required_score
+      in: query
+      required: false
+      description: 'Minimum combined interaction score threshold (0-1000). Higher values return only higher-confidence interactions. Common thresholds: 150 (low), 400 (medium), 700 (high), 900 (highest).
+
+        '
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 1000
+        default: 400
   responses:
     BadRequest:
       description: Bad request (invalid parameters)

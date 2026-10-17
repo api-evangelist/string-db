@@ -164,40 +164,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    JobStatus:
-      type: object
-      description: Job status and results
-      properties:
-        status:
-          type: string
-          enum:
-          - queued
-          - running
-          - done
-          - error
-          description: Current job status
-        job_id:
-          type: string
-          description: Job identifier
-        results:
-          type: array
-          description: Enrichment results (only present when status is "done")
-          items:
-            $ref: '#/components/schemas/EnrichmentResult'
-    JobSubmission:
-      type: object
-      description: Job submission response
-      properties:
-        job_id:
-          type: string
-          description: Unique job identifier for polling
-    ApiKey:
-      type: object
-      description: API key for Values/Ranks enrichment endpoints
-      properties:
-        api_key:
-          type: string
-          description: The API key to use in subsequent Values/Ranks requests
     EnrichmentResult:
       type: object
       description: Functional enrichment result for one term
@@ -239,6 +205,40 @@ components:
           type: string
           description: Human-readable name of the functional term
           example: apoptotic process
+    ApiKey:
+      type: object
+      description: API key for Values/Ranks enrichment endpoints
+      properties:
+        api_key:
+          type: string
+          description: The API key to use in subsequent Values/Ranks requests
+    JobStatus:
+      type: object
+      description: Job status and results
+      properties:
+        status:
+          type: string
+          enum:
+          - queued
+          - running
+          - done
+          - error
+          description: Current job status
+        job_id:
+          type: string
+          description: Job identifier
+        results:
+          type: array
+          description: Enrichment results (only present when status is "done")
+          items:
+            $ref: '#/components/schemas/EnrichmentResult'
+    JobSubmission:
+      type: object
+      description: Job submission response
+      properties:
+        job_id:
+          type: string
+          description: Unique job identifier for polling
     Error:
       type: object
       properties:

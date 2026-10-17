@@ -178,34 +178,6 @@ components:
         - xml
         example: json
   schemas:
-    FunctionalAnnotation:
-      type: object
-      description: Functional annotation for a protein
-      properties:
-        stringId:
-          type: string
-          description: STRING protein identifier
-        ncbiTaxonId:
-          type: integer
-          description: NCBI taxon ID
-        taxonName:
-          type: string
-          description: Scientific name of the organism
-        preferredName:
-          type: string
-          description: Preferred gene/protein name
-        category:
-          type: string
-          description: Annotation category
-        term:
-          type: string
-          description: Term identifier
-        description:
-          type: string
-          description: Human-readable term description
-    TsvResponse:
-      type: string
-      description: Tab-separated values response with header row
     GenesetDescription:
       type: object
       description: Auto-generated description for a protein gene set
@@ -235,6 +207,34 @@ components:
         stringId:
           type: string
           description: STRING identifier for the protein
+    TsvResponse:
+      type: string
+      description: Tab-separated values response with header row
+    FunctionalAnnotation:
+      type: object
+      description: Functional annotation for a protein
+      properties:
+        stringId:
+          type: string
+          description: STRING protein identifier
+        ncbiTaxonId:
+          type: integer
+          description: NCBI taxon ID
+        taxonName:
+          type: string
+          description: Scientific name of the organism
+        preferredName:
+          type: string
+          description: Preferred gene/protein name
+        category:
+          type: string
+          description: Annotation category
+        term:
+          type: string
+          description: Term identifier
+        description:
+          type: string
+          description: Human-readable term description
     Error:
       type: object
       properties:
