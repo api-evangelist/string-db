@@ -59,7 +59,7 @@ apis:
   description: Functional enrichment analysis
   humanURL: https://string-db.org/help/api/
   tags:
-  - Enrichment
+  - Data Enrichment
   tags_raw:
   - enrichment
   properties:
